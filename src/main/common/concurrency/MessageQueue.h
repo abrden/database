@@ -1,0 +1,10 @@
+#ifndef DATABASE_MESSAGEQUEUE_H
+#define DATABASE_MESSAGEQUEUE_H
+
+
+class MessageQueue {
+
+};
+
+
+#endif //DATABASE_MESSAGEQUEUE_H
