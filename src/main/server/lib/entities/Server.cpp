@@ -6,13 +6,13 @@
 #include <system_error>
 #include <cstring>
 
-Server::Server(key_t queue_key, std::string& file) : file(file), queue(queue_key) {}
+Server::Server(key_t queue_key, std::string file) : file(file), queue(queue_key) {}
 
 void Server::entries_to_file() {
     int fd = open(file.c_str(), O_WRONLY | O_CREAT, 0666);
 
     for (auto const& entry : entries) {
-        std::string entry_str = entry.to_string();
+        std::string entry_str = entry->to_string();
         std::cout << "[SERVER] Writing to file : " << entry_str << std::endl;
         ssize_t bytes_written = write(fd, entry_str.c_str(), entry_str.size());
         if ((unsigned long) bytes_written != entry_str.size()) {
@@ -24,4 +24,21 @@ void Server::entries_to_file() {
     }
 
     close(fd);
+}
+
+Entry* Server::get_entry() {
+    // TODO
+    return nullptr;
+}
+
+void Server::add_entry(Entry* entry) {
+    entries.push_back(entry);
+}
+
+void Server::run() {
+    // TODO read msgqueue queries
+}
+
+Server::~Server() {
+    entries_to_file();
 }
