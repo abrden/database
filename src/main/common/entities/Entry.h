@@ -12,6 +12,7 @@ class Entry {
 
     public:
         Entry(std::string& name, std::string& address, std::string& phone);
+        std::string to_string() const;
         ~Entry() = default;
 
 };
