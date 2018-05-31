@@ -32,12 +32,14 @@ void Client::run() {
         std::getline(ss, arg, '\n');
 
         if (op == "add") {
+            // Es necesario un lock??
             if (add_entry(arg)) {
                 std::cout << "Success" << std::endl;
             } else {
                 std::cout << "Error" << std::endl;
             }
-        } else if (op == "select"){
+        } else if (op == "select") {
+            // Es necesario un lock??
             if (get_entry(arg)) {
                std::cout << "Success" << std::endl;
             } else {

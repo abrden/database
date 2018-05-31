@@ -3,11 +3,18 @@
 
 #include <sys/types.h>
 
+#include "EntryData.h"
+
 class MessageQueue {
 
-    public:
-        MessageQueue(key_t key);
+    private:
+        int id;
 
+    public:
+        explicit MessageQueue(key_t key);
+        int push(EntryData* data);
+        EntryData pop();
+        void destroy();
 };
 
 
