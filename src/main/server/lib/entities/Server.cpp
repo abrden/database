@@ -26,9 +26,10 @@ void Server::entries_to_file() {
     close(fd);
 }
 
-Entry* Server::get_entry() {
+std::list<Entry*> Server::get_entry(std::string& name) {
     // TODO
-    return nullptr;
+    std::list<Entry*> l;
+    return l;
 }
 
 void Server::add_entry(Entry* entry) {

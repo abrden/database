@@ -16,7 +16,7 @@ class Server {
 
         void entries_to_file();
         void add_entry(Entry* entry);
-        Entry* get_entry();
+        std::list<Entry*> get_entry(std::string& name);
 
     public:
         Server(key_t queue_key, std::string file);

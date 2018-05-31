@@ -6,12 +6,13 @@
 class Entry {
 
     private:
-        const std::string name;
-        const std::string address;
-        const std::string phone;
+        std::string name;
+        std::string address;
+        std::string phone;
 
     public:
         Entry(std::string& name, std::string& address, std::string& phone);
+        Entry(std::string& entry_str);
         std::string to_string() const;
         ~Entry() = default;
 
