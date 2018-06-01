@@ -3,9 +3,14 @@
 
 #include <stddef.h>
 
-const static size_t NAME_SIZE = 61;
-const static size_t ADDRESS_SIZE = 120;
-const static size_t PHONE_SIZE = 13;
+enum MESSAGE_TYPE {
+    ADD = 1,
+    GET
+};
+
+const static size_t NAME_SIZE = 62;
+const static size_t ADDRESS_SIZE = 121;
+const static size_t PHONE_SIZE = 14;
 
 typedef struct {
     long mtype;

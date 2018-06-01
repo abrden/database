@@ -1,8 +1,6 @@
 #include "MessageQueue.h"
 
-#include <sys/types.h>
 #include <sys/msg.h>
-#include <sys/ipc.h>
 
 MessageQueue::MessageQueue(key_t key) {
     id = msgget(key, 0777| IPC_CREAT);

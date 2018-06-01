@@ -1,6 +1,7 @@
 #include "Entry.h"
 
 #include <sstream>
+#include <src/main/common/definitions/EntryData.h>
 
 const static char SEPARATOR = ',';
 
@@ -23,4 +24,13 @@ std::string Entry::to_string() const {
     std::stringstream ss;
     ss << name << SEPARATOR << address << SEPARATOR << phone << std::endl;
     return ss.str();
+}
+
+EntryData Entry::serialize(long type) const {
+    EntryData data;
+    data.mtype = type;
+
+    name.copy(data.name, );
+
+    return data;
 }

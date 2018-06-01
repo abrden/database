@@ -13,9 +13,10 @@ bool Client::get_entry(std::string& name) {
 bool Client::add_entry(std::string& entry_str) {
     Entry entry(entry_str);
 
-    // TODO send new entry to server
+    EntryData data = entry.serialize(MESSAGE_TYPE::ADD);
+    queue.push(&data);
 
-    return false;
+    return true;
 }
 
 void Client::run() {

@@ -3,6 +3,8 @@
 
 #include <string>
 
+#include "EntryData.h"
+
 class Entry {
 
     private:
@@ -14,6 +16,7 @@ class Entry {
         Entry(std::string& name, std::string& address, std::string& phone);
         Entry(std::string& entry_str);
         std::string to_string() const;
+        EntryData serialize(long type) const;
         ~Entry() = default;
 
 };
