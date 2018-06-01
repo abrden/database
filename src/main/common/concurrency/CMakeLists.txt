@@ -1,4 +1,4 @@
-project(concurrency)
+project(_concurrency)
 
 file(GLOB SOURCES "*.h" "*.cpp")
 
