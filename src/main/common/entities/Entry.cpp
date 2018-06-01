@@ -1,12 +1,14 @@
 #include "Entry.h"
 
 #include <sstream>
-#include <src/main/common/definitions/EntryData.h>
+#include "EntryData.h"
 
 const static char SEPARATOR = ',';
 
 Entry::Entry(std::string& name, std::string& address, std::string& phone)
-        : name(name), address(address), phone(phone) {}
+        : name(name), address(address), phone(phone) {
+            // TODO handle name > BUUFF_SIZE::NAME, etc
+}
 
 Entry::Entry(std::string& entry_str) {
     std::stringstream ss(entry_str);
@@ -30,7 +32,14 @@ EntryData Entry::serialize(long type) const {
     EntryData data;
     data.mtype = type;
 
-    name.copy(data.name, );
+    size_t len = name.copy(data.name, BUFF_SIZE::NAME, 0);
+    data.name[len] = '\0';
 
+    len = address.copy(data.address, BUFF_SIZE::ADDRESS, 0);
+    data.address[len] = '\0';
+
+    len = phone.copy(data.phone, BUFF_SIZE::PHONE, 0);
+    data.phone[len] = '\0';
+    
     return data;
 }

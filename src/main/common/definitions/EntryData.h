@@ -8,15 +8,17 @@ enum MESSAGE_TYPE {
     GET
 };
 
-const static size_t NAME_SIZE = 62;
-const static size_t ADDRESS_SIZE = 121;
-const static size_t PHONE_SIZE = 14;
+enum BUFF_SIZE {
+    NAME = 62,
+    ADDRESS = 121,
+    PHONE = 14
+};
 
 typedef struct {
     long mtype;
-    char name[NAME_SIZE];
-    char address[ADDRESS_SIZE];
-    char phone[PHONE_SIZE];
+    char name[BUFF_SIZE::NAME];
+    char address[BUFF_SIZE::ADDRESS];
+    char phone[BUFF_SIZE::PHONE];
 } EntryData;
 
 #endif //DATABASE_ENTRYDATA_H
