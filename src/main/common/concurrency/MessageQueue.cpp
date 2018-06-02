@@ -18,8 +18,8 @@ void MessageQueue::destroy() {
     msgctl(id, IPC_RMID, NULL);
 }
 
-int MessageQueue::push(EntryData* data) {
-    int sent = msgsnd(id, data, sizeof(EntryData) - sizeof(long), 0);
+int MessageQueue::push(QueryData* data) {
+    int sent = msgsnd(id, data, sizeof(QueryData) - sizeof(long), 0);
     if (sent < 0) {
         std::string message = std::string("Error in msgsnd(): ") + std::string(strerror(errno));
         throw std::system_error(errno, std::system_category(), message); 
@@ -27,9 +27,9 @@ int MessageQueue::push(EntryData* data) {
     return sent;
 }
 
-EntryData MessageQueue::pop() {
-    EntryData data;
-    ssize_t received = msgrcv(id, &data, sizeof(EntryData) - sizeof(long), 0, 0);
+QueryData MessageQueue::pop() {
+    QueryData data;
+    ssize_t received = msgrcv(id, &data, sizeof(QueryData) - sizeof(long), 0, 0);
     if (received < 0) {
         std::string message = std::string("Error in msgrcv(): ") + std::string(strerror(errno));
         throw std::system_error(errno, std::system_category(), message); 

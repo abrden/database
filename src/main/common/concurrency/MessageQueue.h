@@ -3,7 +3,7 @@
 
 #include <sys/types.h>
 
-#include "EntryData.h"
+#include "QueryData.h"
 
 class MessageQueue {
 
@@ -12,8 +12,8 @@ class MessageQueue {
 
     public:
         explicit MessageQueue(key_t key);
-        int push(EntryData* data);
-        EntryData pop();
+        int push(QueryData* data);
+        QueryData pop();
         void destroy();
 };
 

@@ -11,11 +11,11 @@ bool Client::get_entry(std::string& name) {
     std::string null_str = "";
     Entry entry(QUERY_TYPE::GET, name, null_str, null_str);
 
-    EntryData data = entry.serialize(getpid());
+    QueryData data = entry.serialize(getpid());
 
     // lock()
     queue.push(&data);
-    EntryData result = queue.pop();
+    queue.pop();
     // unlock();
     return false;
 }
@@ -23,7 +23,7 @@ bool Client::get_entry(std::string& name) {
 bool Client::add_entry(std::string& entry_str) {
     Entry entry(entry_str);
 
-    EntryData data = entry.serialize(getpid());
+    QueryData data = entry.serialize(getpid());
     queue.push(&data);
 
     return true;

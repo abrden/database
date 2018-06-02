@@ -1,7 +1,8 @@
 #include "Entry.h"
 
 #include <sstream>
-#include "EntryData.h"
+#include <src/main/common/definitions/QueryData.h>
+#include "QueryData.h"
 
 const static char SEPARATOR = ',';
 
@@ -28,8 +29,9 @@ std::string Entry::to_string() const {
     return ss.str();
 }
 
-EntryData Entry::serialize(long type) const {
-    EntryData data;
+QueryData Entry::serialize(long type) const {
+    QueryData data;
+    data.query_type = query_type;
     data.mtype = type;
 
     size_t len = name.copy(data.name, BUFF_SIZE::NAME, 0);

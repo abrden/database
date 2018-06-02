@@ -20,6 +20,6 @@ typedef struct {
     char name[BUFF_SIZE::NAME];
     char address[BUFF_SIZE::ADDRESS];
     char phone[BUFF_SIZE::PHONE];
-} EntryData;
+} QueryData;
 
 #endif //DATABASE_ENTRYDATA_H

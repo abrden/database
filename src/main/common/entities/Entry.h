@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "EntryData.h"
+#include "QueryData.h"
 
 class Entry {
 
@@ -17,7 +17,7 @@ class Entry {
         Entry(int query_type, std::string& name, std::string& address, std::string& phone);
         Entry(std::string& entry_str);
         std::string to_string() const;
-        EntryData serialize(long type) const;
+        QueryData serialize(long type) const;
         ~Entry() = default;
 
 };
