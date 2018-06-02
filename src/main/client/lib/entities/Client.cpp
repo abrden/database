@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <unistd.h>
 
 Client::Client(key_t queue_key) : queue(queue_key) {}
 
@@ -13,7 +14,7 @@ bool Client::get_entry(std::string& name) {
 bool Client::add_entry(std::string& entry_str) {
     Entry entry(entry_str);
 
-    EntryData data = entry.serialize(MESSAGE_TYPE::ADD);
+    EntryData data = entry.serialize(getpid());
     queue.push(&data);
 
     return true;

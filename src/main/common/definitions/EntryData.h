@@ -3,11 +3,6 @@
 
 #include <stddef.h>
 
-enum MESSAGE_TYPE {
-    ADD = 1,
-    GET
-};
-
 enum BUFF_SIZE {
     NAME = 62,
     ADDRESS = 121,
