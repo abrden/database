@@ -3,6 +3,11 @@
 
 #include <stddef.h>
 
+enum QUERY_TYPE {
+    GET,
+    PUT
+};
+
 enum BUFF_SIZE {
     NAME = 62,
     ADDRESS = 121,
@@ -11,6 +16,7 @@ enum BUFF_SIZE {
 
 typedef struct {
     long mtype;
+    int query_type;
     char name[BUFF_SIZE::NAME];
     char address[BUFF_SIZE::ADDRESS];
     char phone[BUFF_SIZE::PHONE];

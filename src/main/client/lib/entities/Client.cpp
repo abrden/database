@@ -9,9 +9,9 @@ Client::Client(key_t queue_key) : queue(queue_key) {}
 bool Client::get_entry(std::string& name) {
     // TODO print matching entries
     std::string null_str = "";
-    Entry entry(name, null_str, null_str);
+    Entry entry(QUERY_TYPE::GET, name, null_str, null_str);
 
-    EntryData data = entry.serialize(MESSAGE_TYPE::GET);
+    EntryData data = entry.serialize(getpid());
 
     // lock()
     queue.push(&data);

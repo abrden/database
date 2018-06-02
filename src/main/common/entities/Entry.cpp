@@ -5,8 +5,8 @@
 
 const static char SEPARATOR = ',';
 
-Entry::Entry(std::string& name, std::string& address, std::string& phone)
-        : name(name), address(address), phone(phone) {
+Entry::Entry(int query_type, std::string& name, std::string& address, std::string& phone)
+        : query_type(query_type), name(name), address(address), phone(phone) {
             // TODO handle name > BUUFF_SIZE::NAME, etc
 }
 
