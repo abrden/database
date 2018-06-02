@@ -5,7 +5,7 @@
 
 #include "QueryData.h"
 
-class Entry {
+class Query {
 
     private:
         int query_type;
@@ -14,11 +14,11 @@ class Entry {
         std::string phone;
 
     public:
-        Entry(int query_type, std::string& name, std::string& address, std::string& phone);
-        Entry(std::string& entry_str);
+        Query(int query_type, std::string& name, std::string& address, std::string& phone);
+        Query(std::string& entry_str);
         std::string to_string() const;
         QueryData serialize(long type) const;
-        ~Entry() = default;
+        ~Query() = default;
 
 };
 

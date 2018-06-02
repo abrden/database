@@ -9,7 +9,7 @@ Client::Client(key_t queue_key) : queue(queue_key) {}
 bool Client::get_entry(std::string& name) {
     // TODO print matching entries
     std::string null_str = "";
-    Entry entry(QUERY_TYPE::GET, name, null_str, null_str);
+    Query entry(QUERY_TYPE::GET, name, null_str, null_str);
 
     QueryData data = entry.serialize(getpid());
 
@@ -21,7 +21,7 @@ bool Client::get_entry(std::string& name) {
 }
 
 bool Client::add_entry(std::string& entry_str) {
-    Entry entry(entry_str);
+    Query entry(entry_str);
 
     QueryData data = entry.serialize(getpid());
     queue.push(&data);

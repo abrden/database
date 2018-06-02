@@ -26,13 +26,13 @@ void Server::entries_to_file() {
     close(fd);
 }
 
-std::list<Entry*> Server::get_entry(std::string& name) {
+std::list<Query*> Server::get_entry(std::string& name) {
     // TODO
-    std::list<Entry*> l;
+    std::list<Query*> l;
     return l;
 }
 
-void Server::add_entry(Entry* entry) {
+void Server::add_entry(Query* entry) {
     entries.push_back(entry);
 }
 

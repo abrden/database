@@ -1,4 +1,4 @@
-#include "Entry.h"
+#include "Query.h"
 
 #include <sstream>
 #include <src/main/common/definitions/QueryData.h>
@@ -6,12 +6,12 @@
 
 const static char SEPARATOR = ',';
 
-Entry::Entry(int query_type, std::string& name, std::string& address, std::string& phone)
+Query::Query(int query_type, std::string& name, std::string& address, std::string& phone)
         : query_type(query_type), name(name), address(address), phone(phone) {
             // TODO handle name > BUUFF_SIZE::NAME, etc
 }
 
-Entry::Entry(std::string& entry_str) {
+Query::Query(std::string& entry_str) {
     std::stringstream ss(entry_str);
     std::string arg;
 
@@ -23,13 +23,13 @@ Entry::Entry(std::string& entry_str) {
     phone = arg;
 }
 
-std::string Entry::to_string() const {
+std::string Query::to_string() const {
     std::stringstream ss;
     ss << name << SEPARATOR << address << SEPARATOR << phone << std::endl;
     return ss.str();
 }
 
-QueryData Entry::serialize(long type) const {
+QueryData Query::serialize(long type) const {
     QueryData data;
     data.query_type = query_type;
     data.mtype = type;

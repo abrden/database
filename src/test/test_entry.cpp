@@ -1,15 +1,15 @@
 #include <string.h>
 
 #include "catch.hpp"
-#include "Entry.h"
+#include "Query.h"
 #include "QueryData.h"
 
-TEST_CASE("Entry", "[entry]") {
+TEST_CASE("Query", "[entry]") {
     int query_type = QUERY_TYPE::GET;
     std::string name = "Osa Barbetta";
     std::string address = "El Bollo 123";
     std::string phone = "0800-OSA";
-    Entry entry(query_type, name, address, phone);
+    Query entry(query_type, name, address, phone);
 
     QueryData entry_data = entry.serialize(0);
 
