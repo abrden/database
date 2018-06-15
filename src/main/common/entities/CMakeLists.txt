@@ -1,4 +1,4 @@
-project(entities)
+project(_entities)
 
 file(GLOB SOURCES "*.h" "*.cpp")
 

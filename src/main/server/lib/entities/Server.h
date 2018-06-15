@@ -5,18 +5,18 @@
 #include <list>
 
 #include "MessageQueue.h"
-#include "Entry.h"
+#include "Query.h"
 
 class Server {
 
     private:
         std::string& file;
         MessageQueue queue; // Se destruye en el padre
-        std::list<Entry*> entries;
+        std::list<Query*> entries;
 
         void entries_to_file();
-        void add_entry(Entry* entry);
-        std::list<Entry*> get_entry(std::string& name);
+        void add_entry(Query* entry);
+        std::list<Query*> get_entry(std::string& name);
 
     public:
         Server(key_t queue_key, std::string file);

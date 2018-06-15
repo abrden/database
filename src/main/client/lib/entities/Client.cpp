@@ -2,20 +2,31 @@
 
 #include <iostream>
 #include <sstream>
+#include <unistd.h>
 
 Client::Client(key_t queue_key) : queue(queue_key) {}
 
 bool Client::get_entry(std::string& name) {
     // TODO print matching entries
+    std::string null_str = "";
+    Query entry(QUERY_TYPE::GET, name, null_str, null_str);
+
+    QueryData data = entry.serialize(getpid());
+
+    // lock()
+    queue.push(&data);
+    queue.pop();
+    // unlock();
     return false;
 }
 
 bool Client::add_entry(std::string& entry_str) {
-    Entry entry(entry_str);
+    Query entry(entry_str);
 
-    // TODO send new entry to server
+    QueryData data = entry.serialize(getpid());
+    queue.push(&data);
 
-    return false;
+    return true;
 }
 
 void Client::run() {
