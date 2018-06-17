@@ -4,12 +4,12 @@
 #include <sys/types.h>
 
 #include "Query.h"
-#include "MessageQueue.h"
+#include "ClientMessageQueue.h"
 
 class Client {
 
     private:
-        MessageQueue queue; // Se destruye en el padre
+        ClientMessageQueue queue; // Se destruye en el padre
 
         bool add_entry(std::string& entry_str);
         bool get_entry(std::string& name);

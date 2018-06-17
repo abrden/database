@@ -5,24 +5,19 @@
 #include <system_error>
 #include <cstring>
 
-#include "ServerMessageQueue.h"
+#include "ClientMessageQueue.h"
 
-ServerMessageQueue::ServerMessageQueue(const std::string &file, const char letter){
+ClientMessageQueue::ClientMessageQueue(const std::string &file, const char letter){
     key_t key = ftok(file.c_str(), letter);
-    if ((id = msgget(key, 0777| IPC_CREAT | IPC_EXCL)) < 0) {
+    if ((id = msgget(key, 0777)) < 0) {
         std::string message = std::string("Error in msgget(): ") + std::string(strerror(errno));
         throw std::system_error(errno, std::system_category(), message);
     };
 }
 
-ServerMessageQueue::ServerMessageQueue(key_t key) {
-    if ((id = msgget(key, 0777 | IPC_CREAT | IPC_EXCL)) < 0) {
+ClientMessageQueue::ClientMessageQueue(key_t key) {
+    if ((id = msgget(key, 0777)) < 0) {
         std::string message = std::string("Error in msgget(): ") + std::string(strerror(errno));
         throw std::system_error(errno, std::system_category(), message);
     };
 }
-
-ServerMessageQueue::~ServerMessageQueue() {
-    msgctl(id, IPC_RMID, nullptr);
-}
-

@@ -6,19 +6,7 @@
 #include <cerrno>
 #include <system_error>
 
-
-MessageQueue::MessageQueue(key_t key) {
-    if ((id = msgget(key, 0777| IPC_CREAT)) < 0) {
-        std::string message = std::string("Error in msgget(): ") + std::string(strerror(errno));
-        throw std::system_error(errno, std::system_category(), message);
-    };
-}
-
-void MessageQueue::destroy() {
-    msgctl(id, IPC_RMID, NULL);
-}
-
-int MessageQueue::push(QueryData* data) {
+int MessageQueue::push(QueryData* data) const {
     int sent = msgsnd(id, data, sizeof(QueryData) - sizeof(long), 0);
     if (sent < 0) {
         std::string message = std::string("Error in msgsnd(): ") + std::string(strerror(errno));
@@ -27,9 +15,9 @@ int MessageQueue::push(QueryData* data) {
     return sent;
 }
 
-QueryData MessageQueue::pop() {
+QueryData MessageQueue::pop(long msgtyp) const {
     QueryData data;
-    ssize_t received = msgrcv(id, &data, sizeof(QueryData) - sizeof(long), 0, 0);
+    ssize_t received = msgrcv(id, &data, sizeof(QueryData) - sizeof(long), msgtyp, 0);
     if (received < 0) {
         std::string message = std::string("Error in msgrcv(): ") + std::string(strerror(errno));
         throw std::system_error(errno, std::system_category(), message); 

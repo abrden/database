@@ -2,19 +2,18 @@
 #define DATABASE_MESSAGEQUEUE_H
 
 #include <sys/types.h>
+#include <string>
 
 #include "QueryData.h"
 
 class MessageQueue {
 
-    private:
+    protected:
         int id;
 
     public:
-        explicit MessageQueue(key_t key);
-        int push(QueryData* data);
-        QueryData pop();
-        void destroy();
+        int push(QueryData* data) const;
+        QueryData pop(long msgtyp = 0) const;
 };
 
 

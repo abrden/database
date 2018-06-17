@@ -4,14 +4,14 @@
 #include <sys/types.h>
 #include <list>
 
-#include "MessageQueue.h"
+#include "ServerMessageQueue.h"
 #include "Query.h"
 
 class Server {
 
     private:
         std::string& file;
-        MessageQueue queue; // Se destruye en el padre
+        ServerMessageQueue queue; // Se destruye en el padre
         std::list<Query*> entries;
 
         void entries_to_file();
