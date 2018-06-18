@@ -11,7 +11,7 @@ class Server {
 
     private:
         std::string& file;
-        ServerMessageQueue queue; // Se destruye en el padre
+        ServerMessageQueue queue;
         std::list<Query*> entries;
 
         void entries_to_file();

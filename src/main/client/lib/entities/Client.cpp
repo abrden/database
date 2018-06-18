@@ -4,7 +4,7 @@
 #include <sstream>
 #include <unistd.h>
 
-Client::Client(key_t queue_key) : queue(queue_key) {}
+Client::Client(key_t queue_key) : queue("/bin/bash", 'A') {}
 
 bool Client::get_entry(std::string& name) {
     // TODO print matching entries

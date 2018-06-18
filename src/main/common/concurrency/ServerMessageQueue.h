@@ -11,7 +11,7 @@ class ServerMessageQueue : public MessageQueue {
 
     public:
         ServerMessageQueue(const std::string& file, const char letter);
-        explicit ServerMessageQueue(key_t key);
+        QueryData pop() override;
         ~ServerMessageQueue();
 };
 

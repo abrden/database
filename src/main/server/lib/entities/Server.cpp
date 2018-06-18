@@ -6,7 +6,7 @@
 #include <system_error>
 #include <cstring>
 
-Server::Server(key_t queue_key, std::string file) : file(file), queue(queue_key) {}
+Server::Server(key_t queue_key, std::string file) : file(file), queue("/bin/bash", 'A') {}
 
 void Server::entries_to_file() {
     int fd = open(file.c_str(), O_WRONLY | O_CREAT, 0666);
