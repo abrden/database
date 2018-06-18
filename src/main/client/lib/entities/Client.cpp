@@ -2,30 +2,29 @@
 
 #include <iostream>
 #include <sstream>
-#include <unistd.h>
+#include "Query.h"
 
 Client::Client(const std::string &queue_file, const char queue_letter) : queue(queue_file, queue_letter) {}
 
 bool Client::get_entry(std::string& name) {
     // TODO print matching entries
     std::string null_str = "";
-    Query entry(QUERY_TYPE::GET, name, null_str, null_str);
-
-    QueryData data = entry.serialize(getpid());
-
-    // lock()
+    Query query(QUERY_TYPE::SELECT, name, null_str, null_str);
+    QueryData data = query.serialize();
     queue.push(&data);
+
     queue.pop();
-    // unlock();
+    // TODO wait for servers response and return its status
     return false;
 }
 
 bool Client::add_entry(std::string& entry_str) {
-    Query entry(entry_str);
-
-    QueryData data = entry.serialize(getpid());
+    Query query(entry_str);
+    QueryData data = query.serialize();
     queue.push(&data);
 
+    queue.pop();
+    // TODO wait for servers response and return its status
     return true;
 }
 

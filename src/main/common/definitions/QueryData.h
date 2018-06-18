@@ -4,8 +4,8 @@
 #include <stddef.h>
 
 enum QUERY_TYPE {
-    GET,
-    PUT
+    SELECT,
+    INSERT
 };
 
 enum BUFF_SIZE {
@@ -15,8 +15,7 @@ enum BUFF_SIZE {
 };
 
 typedef struct {
-    long mtype;
-    int query_type;
+    int operation;
     char name[BUFF_SIZE::NAME];
     char address[BUFF_SIZE::ADDRESS];
     char phone[BUFF_SIZE::PHONE];

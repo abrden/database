@@ -8,16 +8,15 @@
 class Query {
 
     private:
-        int query_type;
+        int operation;
         std::string name;
         std::string address;
         std::string phone;
 
     public:
-        Query(int query_type, std::string& name, std::string& address, std::string& phone);
-        Query(std::string& entry_str);
-        std::string to_string() const;
-        QueryData serialize(long type) const;
+        Query(int operation, std::string& name, std::string& address, std::string& phone);
+        explicit Query(std::string& entry_str);
+        QueryData serialize() const;
         ~Query() = default;
 
 };

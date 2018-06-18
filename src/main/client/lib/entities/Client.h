@@ -3,7 +3,6 @@
 
 #include <sys/types.h>
 
-#include "Query.h"
 #include "ClientMessageQueue.h"
 
 class Client {
