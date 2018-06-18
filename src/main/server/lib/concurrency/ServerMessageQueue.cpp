@@ -5,7 +5,6 @@
 #include <system_error>
 #include <cstring>
 #include <src/main/common/entities/ClientMessage.h>
-#include <src/main/common/definitions/QueryData.h>
 
 #include "ServerMessageQueue.h"
 

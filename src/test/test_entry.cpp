@@ -1,9 +1,7 @@
 #include <string.h>
-#include <src/main/common/definitions/QueryData.h>
 
 #include "catch.hpp"
 #include "Query.h"
-#include "QueryData.h"
 
 TEST_CASE("Query", "[entry]") {
     int query_type = QUERY_TYPE::SELECT;

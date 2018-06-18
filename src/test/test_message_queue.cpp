@@ -1,4 +1,3 @@
-#include <src/main/common/definitions/QueryData.h>
 #include <cstring>
 #include <src/main/common/entities/ClientMessage.h>
 #include "catch.hpp"

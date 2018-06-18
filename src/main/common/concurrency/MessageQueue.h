@@ -4,8 +4,6 @@
 #include <sys/types.h>
 #include <string>
 
-#include "QueryData.h"
-
 class MessageQueue {
 
     private:
