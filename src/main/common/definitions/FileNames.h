@@ -8,8 +8,4 @@ namespace MessageQueueInfo {
     const char LETTER = 'A';
 }
 
-namespace DatabaseInfo {
-    const std::string DB_FILE = "/tmp/db";
-}
-
 #endif //DATABASE_FILENAMES_H
