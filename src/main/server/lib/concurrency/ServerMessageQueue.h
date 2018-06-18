@@ -13,7 +13,7 @@ class ServerMessageQueue {
 
     public:
         ServerMessageQueue(const std::string& file, const char letter);
-        ClientMessageData pop();
+        ClientMessage* pop();
         ~ServerMessageQueue();
 };
 

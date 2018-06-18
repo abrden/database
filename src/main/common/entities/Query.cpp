@@ -4,7 +4,7 @@
 
 const static char SEPARATOR = ',';
 
-Query::Query(int operation, std::string& name, std::string& address, std::string& phone)
+Query::Query(const int operation, const std::string& name, const std::string& address, const std::string& phone)
         : operation(operation), name(name), address(address), phone(phone) {
             // TODO handle name > BUUFF_SIZE::NAME, etc
 }

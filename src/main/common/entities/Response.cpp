@@ -1,6 +1,6 @@
 #include "Response.h"
 
-Response::Response(const bool ok, const std::string &msg, const int operation)
+Response::Response(const bool ok, const std::string& msg, const int operation)
         : ok(ok), operation(operation), msg(msg){}
 
 ResponseData Response::serialize() {
