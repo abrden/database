@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <unistd.h>
 #include "Entry.h"
 #include "Query.h"
 
@@ -9,20 +10,20 @@ Client::Client(const std::string &queue_file, const char queue_letter) : queue(q
 
 bool Client::get_entry(std::string& name, std::string& address, std::string& phone) {
     Query query(QUERY_TYPE::SELECT, name, address, phone);
-    ClientMessage cmsg(&query);
+    ClientMessage cmsg(getpid(), &query);
     queue.push(cmsg);
 
-    //ServerMessage* smsg = queue.pop();
+    //ServerMessage* smsg = queue.pop(getpid());
     // TODO wait for servers response and return its status
     return false;
 }
 
 bool Client::add_entry(std::string& name, std::string& address, std::string& phone)  {
     Query query(QUERY_TYPE::INSERT, name, address, phone);
-    ClientMessage cmsg(&query);
+    ClientMessage cmsg(getpid(), &query);
     queue.push(cmsg);
 
-    //ServerMessage* smsg = queue.pop();
+    //ServerMessage* smsg = queue.pop(getpid());
     // TODO wait for servers response and return its status
     return true;
 }

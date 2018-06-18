@@ -9,11 +9,11 @@ typedef struct {
     QueryData data;
 } ClientMessageData;
 
-class ClientMessage {
+class ClientMessage : public Message {
     private:
         Query* query;
     public:
-        explicit ClientMessage(Query* query);
+        ClientMessage(long mtype, Query* query);
         ClientMessageData serialize() const;
         ~ClientMessage();
 };

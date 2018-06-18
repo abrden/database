@@ -19,8 +19,8 @@ int ClientMessageQueue::push(ClientMessage& msg) {
     return queue.push(&data, sizeof(data));
 }
 
-ServerMessage* ClientMessageQueue::pop() {
-    ServerMessageData* data = (ServerMessageData*) queue.pop(getpid(), sizeof(ServerMessageData));
+ServerMessage* ClientMessageQueue::pop(long mtype) {
+    ServerMessageData* data = (ServerMessageData*) queue.pop(mtype, sizeof(ServerMessageData));
     Response* response = new Response(data->data.ok, data->data.msg, data->data.operation);
     ServerMessage* msg = new ServerMessage(data->mtype, response);
     return msg;
