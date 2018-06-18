@@ -1,5 +1,6 @@
 #include "Query.h"
 
+#include <cstring>
 #include <sstream>
 
 const static char SEPARATOR = ',';
@@ -10,17 +11,19 @@ Query::Query(const int operation, const std::string& name, const std::string& ad
 }
 
 QueryData Query::serialize() const {
-    QueryData qd;
-    qd.operation = operation;
+    QueryData q;
+    memset(&q, 0, sizeof(QueryData));
 
-    size_t len = name.copy(qd.name, QUERY_BUFF_SIZE::NAME, 0);
-    qd.name[len] = '\0';
+    q.operation = operation;
 
-    len = address.copy(qd.address, QUERY_BUFF_SIZE::ADDRESS, 0);
-    qd.address[len] = '\0';
+    size_t len = name.copy(q.name, QUERY_BUFF_SIZE::NAME, 0);
+    q.name[len] = '\0';
 
-    len = phone.copy(qd.phone, QUERY_BUFF_SIZE::PHONE, 0);
-    qd.phone[len] = '\0';
+    len = address.copy(q.address, QUERY_BUFF_SIZE::ADDRESS, 0);
+    q.address[len] = '\0';
+
+    len = phone.copy(q.phone, QUERY_BUFF_SIZE::PHONE, 0);
+    q.phone[len] = '\0';
     
-    return qd;
+    return q;
 }

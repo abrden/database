@@ -1,5 +1,6 @@
-#include <unistd.h>
 #include "ClientMessage.h"
+#include <cstring>
+#include <unistd.h>
 
 ClientMessage::ClientMessage(Query* query) : query(query) {}
 
@@ -8,8 +9,9 @@ ClientMessage::~ClientMessage() {
 }
 
 ClientMessageData ClientMessage::serialize() const {
-    ClientMessageData cd;
-    cd.mtype = getpid();
-    cd.data = query->serialize();
-    return cd;
+    ClientMessageData cm;
+    memset(&cm, 0, sizeof(ClientMessageData));
+    cm.mtype = getpid();
+    cm.data = query->serialize();
+    return cm;
 }

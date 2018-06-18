@@ -8,7 +8,7 @@ class Message {
         const long mtype;
     public:
         Message(long mtype);
-        long get_mtype();
+        long get_mtype() const;
 };
 
 
