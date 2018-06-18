@@ -1,5 +1,5 @@
-#ifndef DATABASE_ENTRY_H
-#define DATABASE_ENTRY_H
+#ifndef DATABASE_QUERY_H
+#define DATABASE_QUERY_H
 
 #include <string>
 
@@ -22,4 +22,4 @@ class Query {
 };
 
 
-#endif //DATABASE_ENTRY_H
+#endif //DATABASE_QUERY_H
