@@ -15,7 +15,7 @@ int MessageQueue::push(QueryData* data) const {
     return sent;
 }
 
-QueryData MessageQueue::_pop(long msgtyp) const {
+QueryData MessageQueue::pop(long msgtyp) const {
     QueryData data;
     ssize_t received = msgrcv(id, &data, sizeof(QueryData) - sizeof(long), msgtyp, 0);
     if (received < 0) {

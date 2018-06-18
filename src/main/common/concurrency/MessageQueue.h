@@ -11,7 +11,7 @@ class MessageQueue {
     protected:
         int id;
 
-        QueryData _pop(long msgtyp) const;
+        QueryData pop(long msgtyp) const;
     public:
         int push(QueryData* data) const;
         virtual QueryData pop() = 0;
