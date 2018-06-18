@@ -10,7 +10,7 @@
 class ClientMessageQueue : public MessageQueue {
     public:
         ClientMessageQueue(const std::string& file, const char letter);
-        QueryData pop() override;
+        QueryData pop() const override;
 };
 
 

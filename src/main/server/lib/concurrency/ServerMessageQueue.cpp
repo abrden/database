@@ -15,7 +15,7 @@ ServerMessageQueue::ServerMessageQueue(const std::string &file, const char lette
     };
 }
 
-QueryData ServerMessageQueue::pop() {
+QueryData ServerMessageQueue::pop() const {
     return MessageQueue::pop(0);
 }
 
