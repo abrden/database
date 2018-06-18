@@ -5,6 +5,7 @@
 #include <string>
 
 #include "ClientMessage.h"
+#include "ServerMessage.h"
 #include "MessageQueue.h"
 
 class ServerMessageQueue {
@@ -13,6 +14,7 @@ class ServerMessageQueue {
 
     public:
         ServerMessageQueue(const std::string& file, const char letter);
+        int push(ServerMessage& msg);
         ClientMessage* pop();
         ~ServerMessageQueue();
 };
