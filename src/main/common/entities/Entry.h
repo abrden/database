@@ -11,6 +11,9 @@ class Entry {
     public:
         Entry(std::string& name, std::string& address, std::string& phone);
         Entry(std::string& entry_str);
+        std::string& get_name();
+        std::string& get_address();
+        std::string& get_phone();
         std::string to_string() const;
 };
 

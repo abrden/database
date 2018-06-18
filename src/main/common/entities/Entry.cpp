@@ -21,6 +21,18 @@ Entry::Entry(std::string& entry_str) {
     phone = arg;
 }
 
+std::string& Entry::get_name() {
+    return name;
+}
+
+std::string& Entry::get_address() {
+    return address;
+}
+
+std::string& Entry::get_phone() {
+    return phone;
+}
+
 std::string Entry::to_string() const {
     std::stringstream ss;
     ss << name << SEPARATOR << address << SEPARATOR << phone << std::endl;

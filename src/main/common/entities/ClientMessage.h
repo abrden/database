@@ -10,11 +10,11 @@ typedef struct {
     QueryData data;
 } ClientMessageData;
 
-class ClientMessage : public Message {
+class ClientMessage {
     private:
         Query* query;
     public:
-        ClientMessage(const long mtype, Query* query);
+        explicit ClientMessage(Query* query);
         ClientMessageData serialize();
         ~ClientMessage();
 };

@@ -1,6 +1,7 @@
+#include <unistd.h>
 #include "ClientMessage.h"
 
-ClientMessage::ClientMessage(const long mtype, Query* query) : Message(mtype), query(query) {}
+ClientMessage::ClientMessage(Query* query) : query(query) {}
 
 ClientMessage::~ClientMessage() {
     delete query;
@@ -8,7 +9,7 @@ ClientMessage::~ClientMessage() {
 
 ClientMessageData ClientMessage::serialize() {
     ClientMessageData cd;
-    cd.mtype = get_mtype();
+    cd.mtype = getpid();
     cd.data = query->serialize();
     return cd;
 }

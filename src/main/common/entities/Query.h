@@ -15,9 +15,7 @@ class Query {
 
     public:
         Query(const int operation, const std::string& name, const std::string& address, const std::string& phone);
-        explicit Query(std::string& entry_str);
         QueryData serialize() const;
-        ~Query() = default;
 
 };
 

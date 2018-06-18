@@ -9,18 +9,6 @@ Query::Query(const int operation, const std::string& name, const std::string& ad
             // TODO handle name > BUUFF_SIZE::NAME, etc
 }
 
-Query::Query(std::string& entry_str) {
-    std::stringstream ss(entry_str);
-    std::string arg;
-
-    std::getline(ss, arg, SEPARATOR);
-    name = arg;
-    std::getline(ss, arg, SEPARATOR);
-    address = arg;
-    std::getline(ss, arg, SEPARATOR);
-    phone = arg;
-}
-
 QueryData Query::serialize() const {
     QueryData qd;
     qd.operation = operation;

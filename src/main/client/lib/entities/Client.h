@@ -10,8 +10,8 @@ class Client {
     private:
         ClientMessageQueue queue;
 
-        bool add_entry(std::string& entry_str);
-        bool get_entry(std::string& name);
+        bool add_entry(std::string& name, std::string& address, std::string& phone);
+        bool get_entry(std::string& name, std::string& address, std::string& phone);
 
     public:
         Client(const std::string& queue_file, const char queue_letter);
