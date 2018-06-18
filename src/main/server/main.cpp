@@ -4,8 +4,7 @@
 int main(int argc, char* argv[]) {
     std::cout << "Hello, World! I'm the server" << std::endl;
 
-//    Server s(std::stoi(argv[1]), 0, argv[2]);
-    Server s("/bin/bash", 'A', argv[2]); // FIXME
+    Server s(std::string(argv[1]), argv[2][0], std::string(argv[3]));
     s.run();
 
     return 0;
