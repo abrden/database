@@ -15,7 +15,7 @@ class ClientMessage {
         Query* query;
     public:
         explicit ClientMessage(Query* query);
-        ClientMessageData serialize();
+        ClientMessageData serialize() const;
         ~ClientMessage();
 };
 

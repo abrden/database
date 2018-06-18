@@ -7,7 +7,7 @@ ServerMessage::~ServerMessage() {
     delete response;
 }
 
-ServerMessageData ServerMessage::serialize() {
+ServerMessageData ServerMessage::serialize() const {
     ServerMessageData sm;
     sm.mtype = get_mtype();
     sm.data = response->serialize();

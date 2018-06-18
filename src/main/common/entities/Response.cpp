@@ -3,7 +3,7 @@
 Response::Response(const bool ok, const std::string& msg, const int operation)
         : ok(ok), operation(operation), msg(msg){}
 
-ResponseData Response::serialize() {
+ResponseData Response::serialize() const {
     ResponseData data;
     data.ok = ok;
     data.operation = operation;
