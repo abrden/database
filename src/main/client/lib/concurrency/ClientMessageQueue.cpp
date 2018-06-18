@@ -17,6 +17,5 @@ ClientMessageQueue::ClientMessageQueue(const std::string &file, const char lette
 }
 
 QueryData ClientMessageQueue::pop() {
-    long pid = getpid();
-    return MessageQueue::pop(pid);
+    return MessageQueue::pop(getpid());
 }
