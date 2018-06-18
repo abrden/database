@@ -19,7 +19,7 @@ class Server {
         std::list<Query*> get_entry(std::string& name);
 
     public:
-        Server(key_t queue_key, std::string file);
+        Server(const std::string &queue_file, const char queue_letter, std::string db_file);
         void run();
         ~Server();
 

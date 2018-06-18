@@ -9,13 +9,13 @@
 class Client {
 
     private:
-        ClientMessageQueue queue; // Se destruye en el padre
+        ClientMessageQueue queue;
 
         bool add_entry(std::string& entry_str);
         bool get_entry(std::string& name);
 
     public:
-        Client(key_t queue_key);
+        Client(const std::string& queue_file, const char queue_letter);
         void run();
         ~Client() = default;
 
