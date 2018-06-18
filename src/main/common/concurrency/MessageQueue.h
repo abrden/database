@@ -8,13 +8,15 @@
 
 class MessageQueue {
 
-    protected:
+    private:
         int id;
 
-        QueryData pop(long msgtyp) const;
     public:
-        int push(QueryData* data) const;
-        virtual QueryData pop() = 0;
+        void create(const std::string &file, const char letter);
+        void attach(const std::string &file, const char letter);
+        int push(void* data, size_t data_size) const;
+        void* pop(long msgtyp, size_t data_size) const;
+        void destroy();
 };
 
 

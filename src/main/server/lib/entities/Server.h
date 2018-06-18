@@ -3,6 +3,7 @@
 
 #include <sys/types.h>
 #include <list>
+#include <src/main/common/entities/Entry.h>
 
 #include "ServerMessageQueue.h"
 #include "Entry.h"

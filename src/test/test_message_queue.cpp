@@ -25,7 +25,7 @@ TEST_CASE( "Message Queue", "[msgq]" ) {
     std::string phone = "0123456789";
     strncpy(sent_data.phone, phone.c_str(), phone.length());
     */
-    c.push(&sent_data);
+    c.push(sent_data);
     ClientMessageData received_data = s.pop();
 
     REQUIRE(received_data.mtype == sent_data.mtype);

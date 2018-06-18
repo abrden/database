@@ -4,14 +4,16 @@
 #include <sys/types.h>
 #include <string>
 
+#include "ClientMessage.h"
 #include "MessageQueue.h"
-#include "QueryData.h"
 
-class ServerMessageQueue : public MessageQueue {
+class ServerMessageQueue {
+    private:
+        MessageQueue queue;
 
     public:
         ServerMessageQueue(const std::string& file, const char letter);
-        QueryData pop() override;
+        ClientMessageData pop();
         ~ServerMessageQueue();
 };
 

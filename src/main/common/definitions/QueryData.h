@@ -8,7 +8,7 @@ enum QUERY_TYPE {
     INSERT
 };
 
-enum BUFF_SIZE {
+enum QUERY_BUFF_SIZE {
     NAME = 62,
     ADDRESS = 121,
     PHONE = 14
@@ -16,9 +16,9 @@ enum BUFF_SIZE {
 
 typedef struct {
     int operation;
-    char name[BUFF_SIZE::NAME];
-    char address[BUFF_SIZE::ADDRESS];
-    char phone[BUFF_SIZE::PHONE];
+    char name[QUERY_BUFF_SIZE::NAME];
+    char address[QUERY_BUFF_SIZE::ADDRESS];
+    char phone[QUERY_BUFF_SIZE::PHONE];
 } QueryData;
 
 #endif //DATABASE_ENTRYDATA_H

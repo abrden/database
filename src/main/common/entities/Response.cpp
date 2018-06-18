@@ -7,7 +7,7 @@ ResponseData Response::serialize() {
     ResponseData data;
     data.ok = ok;
     data.operation = operation;
-    size_t len = msg.copy(data.msg, BUFF_SIZE::MSG, 0);
+    size_t len = msg.copy(data.msg, RESPONSE_BUFF_SIZE::MSG, 0);
     data.msg[len] = '\0';
     return data;
 }

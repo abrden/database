@@ -3,14 +3,14 @@
 
 #include <string>
 
-enum BUFF_SIZE {
+enum RESPONSE_BUFF_SIZE {
     MSG = 256
 };
 
 typedef struct {
     bool ok;
     int operation;
-    char msg[BUFF_SIZE::MSG];
+    char msg[RESPONSE_BUFF_SIZE::MSG];
 } ResponseData;
 
 class Response {

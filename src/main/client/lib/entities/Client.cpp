@@ -10,8 +10,8 @@ bool Client::get_entry(std::string& name) {
     // TODO print matching entries
     std::string null_str = "";
     Query query(QUERY_TYPE::SELECT, name, null_str, null_str);
-    QueryData data = query.serialize();
-    queue.push(&data);
+    //QueryData data = query.serialize();
+    //queue.push(&data);
 
     queue.pop();
     // TODO wait for servers response and return its status
@@ -20,8 +20,8 @@ bool Client::get_entry(std::string& name) {
 
 bool Client::add_entry(std::string& entry_str) {
     Query query(entry_str);
-    QueryData data = query.serialize();
-    queue.push(&data);
+    //QueryData data = query.serialize();
+    //queue.push(&data);
 
     queue.pop();
     // TODO wait for servers response and return its status

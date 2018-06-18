@@ -3,6 +3,7 @@
 
 #include "Message.h"
 #include "Query.h"
+#include "QueryData.h"
 
 typedef struct {
     long mtype;
