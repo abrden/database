@@ -15,6 +15,7 @@ class MessageQueue {
         int push(void* data, size_t data_size) const;
         ssize_t pop(void *data, long msgtyp, size_t data_size) const;
         void destroy();
+
 };
 
 

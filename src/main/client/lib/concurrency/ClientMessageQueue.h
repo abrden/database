@@ -15,6 +15,7 @@ class ClientMessageQueue {
         ClientMessageQueue(const std::string& file, const char letter);
         int push(ClientMessage& msg);
         ServerMessage* pop(long mtype);
+
 };
 
 
