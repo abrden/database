@@ -13,7 +13,7 @@ class ClientMessage : public Message {
     private:
         Query query;
     public:
-        ClientMessage(long mtype, Query& query);
+        ClientMessage(long mtype, const Query& query);
         ClientMessageData serialize() const;
         ~ClientMessage();
 };

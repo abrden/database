@@ -14,7 +14,7 @@ class ServerMessage : public Message {
         Response response;
 
     public:
-        ServerMessage(const long mtype, Response& response);
+        ServerMessage(const long mtype, const Response& response);
         ServerMessageData serialize() const;
         ~ServerMessage();
 };

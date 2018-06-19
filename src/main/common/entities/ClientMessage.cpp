@@ -2,7 +2,7 @@
 #include <cstring>
 #include <unistd.h>
 
-ClientMessage::ClientMessage(long mtype, Query& query) : Message(mtype), query(query) {}
+ClientMessage::ClientMessage(long mtype, const Query& query) : Message(mtype), query(query) {}
 
 ClientMessage::~ClientMessage() {
 //    delete query;

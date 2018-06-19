@@ -1,7 +1,7 @@
 #include "ServerMessage.h"
 #include <cstring>
 
-ServerMessage::ServerMessage(const long mtype, Response& response)
+ServerMessage::ServerMessage(const long mtype, const Response& response)
         : Message(mtype), response(response) {}
 
 ServerMessage::~ServerMessage() {
