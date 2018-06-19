@@ -46,21 +46,27 @@ TEST_CASE( "Message queue", "[msgq]" ) {
         Query query(SELECT, "Juan Perez", "Calle Falsa 123", "0123456789");
         Query query2(SELECT, "Esteban Quito", "Nazca 500", "911");
         QueryData data[] = {query.serialize(), query2.serialize()};
+        TestMessage expected_msg;
+        memset(&expected_msg, 0, sizeof(TestMessage));
+        expected_msg.mtype = 1;
+        memcpy(expected_msg.data, data, sizeof(QueryData) * 2);
 
-        TestMessage msg;
-        memset(&msg, 0, sizeof(TestMessage));
-        msg.mtype = 1;
-        memcpy(msg.data, data, sizeof(QueryData) * 2);
-
-        queue.push(&msg, sizeof(TestMessage));
+        {
+            TestMessage sent_msg;
+            memset(&sent_msg, 0, sizeof(TestMessage));
+            sent_msg.mtype = 1;
+            memcpy(sent_msg.data, data, sizeof(QueryData) * 2);
+            queue.push(&sent_msg, sizeof(TestMessage)); 
+        }
+        
         TestMessage received_msg;
         queue.pop(&received_msg, 0, sizeof(TestMessage));
 
-        REQUIRE(received_msg.mtype == msg.mtype);
-        REQUIRE(received_msg.data[0].operation == msg.data[0].operation);
-        REQUIRE(strcmp(received_msg.data[0].name, msg.data[0].name) == 0);
-        REQUIRE(strcmp(received_msg.data[0].address, msg.data[0].address) == 0);
-        REQUIRE(strcmp(received_msg.data[0].phone, msg.data[0].phone) == 0);
+        REQUIRE(received_msg.mtype == expected_msg.mtype);
+        REQUIRE(received_msg.data[0].operation == expected_msg.data[0].operation);
+        REQUIRE(strcmp(received_msg.data[0].name, expected_msg.data[0].name) == 0);
+        REQUIRE(strcmp(received_msg.data[0].address, expected_msg.data[0].address) == 0);
+        REQUIRE(strcmp(received_msg.data[0].phone, expected_msg.data[0].phone) == 0);
 
         queue.destroy();
     }
