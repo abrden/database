@@ -6,16 +6,22 @@
 #include <cstring>
 #include <unistd.h>
 
+#include "ServerMessage.h"
 #include "ClientMessageQueue.h"
 
-ClientMessageQueue::ClientMessageQueue(const std::string &file, const char letter){
-    key_t key = ftok(file.c_str(), letter);
-    if ((id = msgget(key, 0777)) < 0) {
-        std::string message = std::string("Error in msgget(): ") + std::string(strerror(errno));
-        throw std::system_error(errno, std::system_category(), message);
-    };
+ClientMessageQueue::ClientMessageQueue(const std::string& file, const char letter) {
+    queue.attach(file, letter);
 }
 
-QueryData ClientMessageQueue::pop() const {
-    return MessageQueue::pop(getpid());
+int ClientMessageQueue::push(ClientMessage& msg) const {
+    ClientMessageData data = msg.serialize();
+    return queue.push(&data, sizeof(data));
+}
+
+ServerMessage ClientMessageQueue::pop(long mtype) const {
+    ServerMessageData data;
+    queue.pop(&data, mtype, sizeof(ServerMessageData));
+    Response response(data.data.ok, data.data.msg, data.data.operation);
+    ServerMessage msg(data.mtype, response);
+    return msg;
 }

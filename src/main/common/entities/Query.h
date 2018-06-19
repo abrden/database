@@ -1,26 +1,40 @@
-#ifndef DATABASE_ENTRY_H
-#define DATABASE_ENTRY_H
+#ifndef DATABASE_QUERY_H
+#define DATABASE_QUERY_H
 
 #include <string>
+#include <stddef.h>
 
-#include "QueryData.h"
+enum QUERY_TYPE {
+    SELECT,
+    INSERT
+};
+
+enum QUERY_BUFF_SIZE {
+    NAME = 62,
+    ADDRESS = 121,
+    PHONE = 14
+};
+
+typedef struct {
+    int operation;
+    char name[QUERY_BUFF_SIZE::NAME];
+    char address[QUERY_BUFF_SIZE::ADDRESS];
+    char phone[QUERY_BUFF_SIZE::PHONE];
+} QueryData;
 
 class Query {
 
     private:
-        int query_type;
+        int operation;
         std::string name;
         std::string address;
         std::string phone;
 
     public:
-        Query(int query_type, std::string& name, std::string& address, std::string& phone);
-        Query(std::string& entry_str);
-        std::string to_string() const;
-        QueryData serialize(long type) const;
-        ~Query() = default;
+        Query(const int operation, const std::string& name, const std::string& address, const std::string& phone);
+        QueryData serialize() const;
 
 };
 
 
-#endif //DATABASE_ENTRY_H
+#endif //DATABASE_QUERY_H

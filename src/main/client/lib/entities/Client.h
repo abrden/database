@@ -3,7 +3,6 @@
 
 #include <sys/types.h>
 
-#include "Query.h"
 #include "ClientMessageQueue.h"
 
 class Client {
@@ -11,8 +10,8 @@ class Client {
     private:
         ClientMessageQueue queue;
 
-        bool add_entry(std::string& entry_str);
-        bool get_entry(std::string& name);
+        bool add_entry(const std::string& name, const std::string& address, const std::string& phone);
+        bool get_entry(const std::string& name, const std::string& address, const std::string& phone);
 
     public:
         Client(const std::string& queue_file, const char queue_letter);

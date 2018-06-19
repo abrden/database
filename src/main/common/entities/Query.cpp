@@ -1,47 +1,29 @@
 #include "Query.h"
 
+#include <cstring>
 #include <sstream>
-#include <src/main/common/definitions/QueryData.h>
-#include "QueryData.h"
 
 const static char SEPARATOR = ',';
 
-Query::Query(int query_type, std::string& name, std::string& address, std::string& phone)
-        : query_type(query_type), name(name), address(address), phone(phone) {
+Query::Query(const int operation, const std::string& name, const std::string& address, const std::string& phone)
+        : operation(operation), name(name), address(address), phone(phone) {
             // TODO handle name > BUUFF_SIZE::NAME, etc
 }
 
-Query::Query(std::string& entry_str) {
-    std::stringstream ss(entry_str);
-    std::string arg;
+QueryData Query::serialize() const {
+    QueryData q;
+    memset(&q, 0, sizeof(QueryData));
 
-    std::getline(ss, arg, SEPARATOR);
-    name = arg;
-    std::getline(ss, arg, SEPARATOR);
-    address = arg;
-    std::getline(ss, arg, SEPARATOR);
-    phone = arg;
-}
+    q.operation = operation;
 
-std::string Query::to_string() const {
-    std::stringstream ss;
-    ss << name << SEPARATOR << address << SEPARATOR << phone << std::endl;
-    return ss.str();
-}
+    size_t len = name.copy(q.name, QUERY_BUFF_SIZE::NAME, 0);
+    q.name[len] = '\0';
 
-QueryData Query::serialize(long type) const {
-    QueryData data;
-    data.query_type = query_type;
-    data.mtype = type;
+    len = address.copy(q.address, QUERY_BUFF_SIZE::ADDRESS, 0);
+    q.address[len] = '\0';
 
-    size_t len = name.copy(data.name, BUFF_SIZE::NAME, 0);
-    data.name[len] = '\0';
-
-    len = address.copy(data.address, BUFF_SIZE::ADDRESS, 0);
-    data.address[len] = '\0';
-
-    len = phone.copy(data.phone, BUFF_SIZE::PHONE, 0);
-    data.phone[len] = '\0';
+    len = phone.copy(q.phone, QUERY_BUFF_SIZE::PHONE, 0);
+    q.phone[len] = '\0';
     
-    return data;
+    return q;
 }

@@ -7,19 +7,24 @@
 
 #include "ServerMessageQueue.h"
 
-ServerMessageQueue::ServerMessageQueue(const std::string &file, const char letter){
-    key_t key = ftok(file.c_str(), letter);
-    if ((id = msgget(key, 0777 | IPC_CREAT | IPC_EXCL)) < 0) {
-        std::string message = std::string("Error in msgget(): ") + std::string(strerror(errno));
-        throw std::system_error(errno, std::system_category(), message);
-    };
+ServerMessageQueue::ServerMessageQueue(const std::string& file, const char letter){
+    queue.create(file, letter);
 }
 
-QueryData ServerMessageQueue::pop() const {
-    return MessageQueue::pop(0);
+int ServerMessageQueue::push(ServerMessage& msg) const {
+    ServerMessageData data = msg.serialize();
+    return queue.push(&data, sizeof(data));
+}
+
+ClientMessage ServerMessageQueue::pop() const {
+    ClientMessageData data;
+    queue.pop(&data, 0, sizeof(ClientMessageData));
+    Query query(data.data.operation, data.data.name, data.data.address, data.data.phone);
+    ClientMessage msg(data.mtype, query);
+    return msg;
 }
 
 ServerMessageQueue::~ServerMessageQueue() {
-    msgctl(id, IPC_RMID, nullptr);
+    queue.destroy();
 }
 

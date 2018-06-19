@@ -3,29 +3,28 @@
 #include <iostream>
 #include <sstream>
 #include <unistd.h>
+#include "Entry.h"
+#include "Query.h"
 
 Client::Client(const std::string &queue_file, const char queue_letter) : queue(queue_file, queue_letter) {}
 
-bool Client::get_entry(std::string& name) {
-    // TODO print matching entries
-    std::string null_str = "";
-    Query entry(QUERY_TYPE::GET, name, null_str, null_str);
+bool Client::get_entry(const std::string& name, const std::string& address, const std::string& phone) {
+    Query query(QUERY_TYPE::SELECT, name, address, phone);
+    ClientMessage cmsg(getpid(), query);
+    queue.push(cmsg);
 
-    QueryData data = entry.serialize(getpid());
-
-    // lock()
-    queue.push(&data);
-    queue.pop();
-    // unlock();
+    //ServerMessage* smsg = queue.pop(getpid());
+    // TODO wait for servers response and return its status
     return false;
 }
 
-bool Client::add_entry(std::string& entry_str) {
-    Query entry(entry_str);
+bool Client::add_entry(const std::string& name, const std::string& address, const std::string& phone)  {
+    Query query(QUERY_TYPE::INSERT, name, address, phone);
+    ClientMessage cmsg(getpid(), query);
+    queue.push(cmsg);
 
-    QueryData data = entry.serialize(getpid());
-    queue.push(&data);
-
+    //ServerMessage* smsg = queue.pop(getpid());
+    // TODO wait for servers response and return its status
     return true;
 }
 
@@ -44,14 +43,16 @@ void Client::run() {
 
         if (op == "add") {
             // Es necesario un lock??
-            if (add_entry(arg)) {
+            Entry entry(arg);
+            if (add_entry(entry.get_name(), entry.get_address(), entry.get_phone())) {
                 std::cout << "Success" << std::endl;
             } else {
                 std::cout << "Error" << std::endl;
             }
         } else if (op == "select") {
             // Es necesario un lock??
-            if (get_entry(arg)) {
+            Entry entry(arg);
+            if (get_entry(entry.get_name(), entry.get_address(), entry.get_phone())) {
                std::cout << "Success" << std::endl;
             } else {
                 std::cout << "Error" << std::endl;
