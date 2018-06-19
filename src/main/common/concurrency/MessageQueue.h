@@ -13,7 +13,7 @@ class MessageQueue {
         void create(const std::string &file, const char letter);
         void attach(const std::string &file, const char letter);
         int push(void* data, size_t data_size) const;
-        void* pop(long msgtyp, size_t data_size) const;
+        ssize_t pop(void *data, long msgtyp, size_t data_size) const;
         void destroy();
 };
 
