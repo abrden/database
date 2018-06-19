@@ -17,7 +17,7 @@ class Response {
     private:
         const bool ok;
         const int operation;
-        const std::string& msg;
+        const std::string msg;
 
     public:
         Response(const bool ok, const std::string& msg, const int operation);
