@@ -19,10 +19,10 @@ int ClientMessageQueue::push(ClientMessage& msg) {
     return queue.push(&data, sizeof(data));
 }
 
-ServerMessage* ClientMessageQueue::pop(long mtype) {
+ServerMessage ClientMessageQueue::pop(long mtype) {
     ServerMessageData data;
     queue.pop(&data, mtype, sizeof(ServerMessageData));
     Response response(data.data.ok, data.data.msg, data.data.operation);
-    ServerMessage* msg = new ServerMessage(data.mtype, response);
+    ServerMessage msg(data.mtype, response);
     return msg;
 }

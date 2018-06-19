@@ -17,11 +17,11 @@ int ServerMessageQueue::push(ServerMessage& msg) {
     return queue.push(&data, sizeof(data));
 }
 
-ClientMessage* ServerMessageQueue::pop() {
+ClientMessage ServerMessageQueue::pop() {
     ClientMessageData data;
     queue.pop(&data, 0, sizeof(ClientMessageData));
     Query query(data.data.operation, data.data.name, data.data.address, data.data.phone);
-    ClientMessage* msg = new ClientMessage(data.mtype, query);
+    ClientMessage msg(data.mtype, query);
     return msg;
 }
 

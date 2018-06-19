@@ -15,7 +15,7 @@ class ServerMessageQueue {
     public:
         ServerMessageQueue(const std::string& file, const char letter);
         int push(ServerMessage& msg);
-        ClientMessage* pop();
+        ClientMessage pop();
         ~ServerMessageQueue();
 };
 
