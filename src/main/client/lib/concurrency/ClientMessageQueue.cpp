@@ -7,7 +7,6 @@
 #include <unistd.h>
 
 #include "ServerMessage.h"
-#include "Response.h"
 #include "ClientMessageQueue.h"
 
 ClientMessageQueue::ClientMessageQueue(const std::string& file, const char letter) {
