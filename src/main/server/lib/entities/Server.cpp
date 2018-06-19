@@ -66,5 +66,9 @@ void Server::run() {
 
 Server::~Server() {
     entries_to_file();
+    while (!entries.empty()) {
+        delete entries.back();
+        entries.pop_back();
+    }
     SignalHandler::destroy();
 }
