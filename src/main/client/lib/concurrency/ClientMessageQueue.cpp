@@ -22,7 +22,7 @@ int ClientMessageQueue::push(ClientMessage& msg) {
 ServerMessage* ClientMessageQueue::pop(long mtype) {
     ServerMessageData data;
     queue.pop(&data, mtype, sizeof(ServerMessageData));
-    Response* response = new Response(data.data.ok, data.data.msg, data.data.operation);
+    Response response(data.data.ok, data.data.msg, data.data.operation);
     ServerMessage* msg = new ServerMessage(data.mtype, response);
     return msg;
 }
