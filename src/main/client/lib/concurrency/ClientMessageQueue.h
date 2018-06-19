@@ -13,8 +13,8 @@ class ClientMessageQueue {
         MessageQueue queue;
     public:
         ClientMessageQueue(const std::string& file, const char letter);
-        int push(ClientMessage& msg);
-        ServerMessage pop(long mtype);
+        int push(ClientMessage& msg) const;
+        ServerMessage pop(long mtype) const;
 };
 
 

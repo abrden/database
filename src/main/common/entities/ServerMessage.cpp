@@ -4,10 +4,6 @@
 ServerMessage::ServerMessage(const long mtype, const Response& response)
         : Message(mtype), response(response) {}
 
-ServerMessage::~ServerMessage() {
-//    delete response;
-}
-
 ServerMessageData ServerMessage::serialize() const {
     ServerMessageData sm;
     memset(&sm, 0, sizeof(ServerMessageData));

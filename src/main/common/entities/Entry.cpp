@@ -4,7 +4,7 @@
 
 const static char SEPARATOR = ',';
 
-Entry::Entry(std::string& name, std::string& address, std::string& phone)
+Entry::Entry(const std::string& name, const std::string& address, const std::string& phone)
         : name(name), address(address), phone(phone) {
     // TODO handle name > QUERY_BUFF_SIZE::NAME, etc
 }
@@ -21,15 +21,15 @@ Entry::Entry(std::string& entry_str) {
     phone = arg;
 }
 
-std::string& Entry::get_name() {
+std::string Entry::get_name() const {
     return name;
 }
 
-std::string& Entry::get_address() {
+std::string Entry::get_address() const {
     return address;
 }
 
-std::string& Entry::get_phone() {
+std::string Entry::get_phone() const {
     return phone;
 }
 

@@ -13,12 +13,12 @@ ClientMessageQueue::ClientMessageQueue(const std::string& file, const char lette
     queue.attach(file, letter);
 }
 
-int ClientMessageQueue::push(ClientMessage& msg) {
+int ClientMessageQueue::push(ClientMessage& msg) const {
     ClientMessageData data = msg.serialize();
     return queue.push(&data, sizeof(data));
 }
 
-ServerMessage ClientMessageQueue::pop(long mtype) {
+ServerMessage ClientMessageQueue::pop(long mtype) const {
     ServerMessageData data;
     queue.pop(&data, mtype, sizeof(ServerMessageData));
     Response response(data.data.ok, data.data.msg, data.data.operation);

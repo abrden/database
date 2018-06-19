@@ -4,10 +4,6 @@
 
 ClientMessage::ClientMessage(long mtype, const Query& query) : Message(mtype), query(query) {}
 
-ClientMessage::~ClientMessage() {
-//    delete query;
-}
-
 ClientMessageData ClientMessage::serialize() const {
     ClientMessageData cm;
     memset(&cm, 0, sizeof(ClientMessageData));

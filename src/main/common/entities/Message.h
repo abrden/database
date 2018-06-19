@@ -7,7 +7,7 @@ class Message {
     private:
         const long mtype;
     public:
-        Message(long mtype);
+        explicit Message(long mtype);
         long get_mtype() const;
 };
 

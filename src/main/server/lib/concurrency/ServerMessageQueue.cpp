@@ -11,12 +11,12 @@ ServerMessageQueue::ServerMessageQueue(const std::string& file, const char lette
     queue.create(file, letter);
 }
 
-int ServerMessageQueue::push(ServerMessage& msg) {
+int ServerMessageQueue::push(ServerMessage& msg) const {
     ServerMessageData data = msg.serialize();
     return queue.push(&data, sizeof(data));
 }
 
-ClientMessage ServerMessageQueue::pop() {
+ClientMessage ServerMessageQueue::pop() const {
     ClientMessageData data;
     queue.pop(&data, 0, sizeof(ClientMessageData));
     Query query(data.data.operation, data.data.name, data.data.address, data.data.phone);
