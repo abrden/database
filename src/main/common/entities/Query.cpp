@@ -27,3 +27,19 @@ QueryData Query::serialize() const {
     
     return q;
 }
+
+int Query::get_operation() const {
+    return operation;
+}
+
+std::string Query::get_name() const {
+    return name;
+}
+
+std::string Query::get_address() const {
+    return address;
+}
+
+std::string Query::get_phone() const {
+    return phone;
+}

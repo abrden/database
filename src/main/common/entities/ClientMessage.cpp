@@ -11,3 +11,7 @@ ClientMessageData ClientMessage::serialize() const {
     cm.data = query.serialize();
     return cm;
 }
+
+Query ClientMessage::get_query() const {
+    return query;
+}

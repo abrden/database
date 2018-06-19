@@ -6,8 +6,12 @@
 #include <system_error>
 #include <cstring>
 
+#include "SignalHandler.h"
+
 Server::Server(const std::string& queue_file, const char queue_letter, std::string db_file)
-        : file(db_file), queue(queue_file, queue_letter) {}
+        : file(db_file), queue(queue_file, queue_letter) {
+    SignalHandler::get_instance()->register_handler(SIGINT, &sigint_handler);
+}
 
 void Server::entries_to_file() {
     int fd = open(file.c_str(), O_WRONLY | O_CREAT, 0666);
@@ -27,20 +31,40 @@ void Server::entries_to_file() {
     close(fd);
 }
 
-std::list<Entry*> Server::get_entry(std::string& name) {
+Response* Server::select_entries(const std::string& name,
+                                         const std::string& address,
+                                         const std::string& phone) const {
     // TODO
     std::list<Entry*> l;
-    return l;
+    return nullptr;
 }
 
-void Server::add_entry(Entry* entry) {
+Response* Server::insert_entry(const std::string& name,
+                          const std::string& address,
+                          const std::string& phone) {
+    // TODO
+    Entry* entry = new Entry(name, address, phone);
     entries.push_back(entry);
+
+    return nullptr;
 }
 
 void Server::run() {
-    // TODO read msgqueue queries
+    while (sigint_handler.get_graceful_quit() == 0) {
+        ClientMessage cmsg = queue.pop();
+        Query query = cmsg.get_query();
+        Response* response;
+        if (query.get_operation() == SELECT) {
+            response = select_entries(query.get_name(), query.get_address(), query.get_phone());
+        } if (query.get_operation() == INSERT) {
+            response = insert_entry(query.get_name(), query.get_address(), query.get_phone());
+        }
+        ServerMessage smsg(cmsg.get_mtype(), *response);
+        queue.push(smsg);
+    }
 }
 
 Server::~Server() {
     entries_to_file();
+    SignalHandler::destroy();
 }

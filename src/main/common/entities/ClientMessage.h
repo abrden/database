@@ -15,6 +15,7 @@ class ClientMessage : public Message {
     public:
         ClientMessage(long mtype, const Query& query);
         ClientMessageData serialize() const;
+        Query get_query() const;
 };
 
 

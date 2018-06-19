@@ -33,6 +33,10 @@ class Query {
     public:
         Query(const int operation, const std::string& name, const std::string& address, const std::string& phone);
         QueryData serialize() const;
+        int get_operation() const;
+        std::string get_name() const;
+        std::string get_address() const;
+        std::string get_phone() const;
 
 };
 
