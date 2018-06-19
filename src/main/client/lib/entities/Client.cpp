@@ -10,7 +10,7 @@ Client::Client(const std::string &queue_file, const char queue_letter) : queue(q
 
 bool Client::get_entry(std::string& name, std::string& address, std::string& phone) {
     Query query(QUERY_TYPE::SELECT, name, address, phone);
-    ClientMessage cmsg(getpid(), &query);
+    ClientMessage cmsg(getpid(), query);
     queue.push(cmsg);
 
     //ServerMessage* smsg = queue.pop(getpid());
@@ -20,7 +20,7 @@ bool Client::get_entry(std::string& name, std::string& address, std::string& pho
 
 bool Client::add_entry(std::string& name, std::string& address, std::string& phone)  {
     Query query(QUERY_TYPE::INSERT, name, address, phone);
-    ClientMessage cmsg(getpid(), &query);
+    ClientMessage cmsg(getpid(), query);
     queue.push(cmsg);
 
     //ServerMessage* smsg = queue.pop(getpid());

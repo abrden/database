@@ -14,7 +14,7 @@ TEST_CASE( "Message Queue", "[msgq]" ) {
     ClientMessageQueue c(queue_file, queue_letter);
 
     Query query(SELECT, "Juan Perez", "Calle Falsa 123", "0123456789");
-    ClientMessage cmsg(getpid(), &query);
+    ClientMessage cmsg(getpid(), query);
     QueryData expected_query_data = cmsg.serialize().data;
 
     c.push(cmsg);

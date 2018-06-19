@@ -11,9 +11,9 @@ typedef struct {
 
 class ClientMessage : public Message {
     private:
-        Query* query;
+        Query query;
     public:
-        ClientMessage(long mtype, Query* query);
+        ClientMessage(long mtype, Query& query);
         ClientMessageData serialize() const;
         ~ClientMessage();
 };
