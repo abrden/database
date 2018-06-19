@@ -13,9 +13,8 @@ bool Client::get_entry(const std::string& name, const std::string& address, cons
     ClientMessage cmsg(getpid(), query);
     queue.push(cmsg);
 
-    //ServerMessage* smsg = queue.pop(getpid());
-    // TODO wait for servers response and return its status
-    return false;
+    ServerMessage smsg = queue.pop(getpid());
+    return smsg.get_response().get_ok();
 }
 
 bool Client::add_entry(const std::string& name, const std::string& address, const std::string& phone)  {
@@ -23,9 +22,8 @@ bool Client::add_entry(const std::string& name, const std::string& address, cons
     ClientMessage cmsg(getpid(), query);
     queue.push(cmsg);
 
-    //ServerMessage* smsg = queue.pop(getpid());
-    // TODO wait for servers response and return its status
-    return true;
+    ServerMessage smsg = queue.pop(getpid());
+    return smsg.get_response().get_ok();
 }
 
 void Client::run() {

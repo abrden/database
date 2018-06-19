@@ -22,6 +22,7 @@ class Response {
     public:
         Response(const bool ok, const std::string& msg, const int operation);
         ResponseData serialize() const;
+        bool get_ok() const;
 };
 
 

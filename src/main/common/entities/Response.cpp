@@ -13,3 +13,7 @@ ResponseData Response::serialize() const {
     r.msg[len] = '\0';
     return r;
 }
+
+bool Response::get_ok() const {
+    return ok;
+}

@@ -12,3 +12,7 @@ ServerMessageData ServerMessage::serialize() const {
 
     return sm;
 }
+
+Response ServerMessage::get_response() const {
+    return response;
+}
