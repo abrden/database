@@ -4,7 +4,7 @@
 Response::Response(const bool ok, const std::string& msg, const int operation)
         : ok(ok), operation(operation), msg(msg) {}
 
-Response::Response(const bool ok, const std::string& msg, const int operation, const std::vector<Entry>& entries)
+Response::Response(const bool ok, const std::string& msg, const int operation, const std::vector<Entry*>& entries)
         : ok(ok), operation(operation), msg(msg), entries(entries) {}
 
 ResponseData Response::serialize() const {
@@ -18,7 +18,7 @@ ResponseData Response::serialize() const {
 
     EntryData raw_entries[RESPONSE_BUFF_SIZE::SELECTION];
     for (size_t i = 0; i < r.len_selection; i++) {
-        raw_entries[i] = entries[i].serialize();
+        raw_entries[i] = entries[i]->serialize();
     }
     memcpy(r.selection, raw_entries, r.len_selection);
     return r;

@@ -24,11 +24,11 @@ class Response {
         const bool ok;
         const int operation;
         const std::string msg;
-        const std::vector<Entry> entries;
+        const std::vector<Entry*> entries;
 
     public:
         Response(const bool ok, const std::string& msg, const int operation);
-        Response(const bool ok, const std::string& msg, const int operation, const std::vector<Entry>& entries);
+        Response(const bool ok, const std::string& msg, const int operation, const std::vector<Entry*>& entries);
         ResponseData serialize() const;
         bool get_ok() const;
 };

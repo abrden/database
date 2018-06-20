@@ -32,21 +32,25 @@ void Server::entries_to_file() {
 }
 
 Response* Server::select_entries(const std::string& name,
-                                         const std::string& address,
-                                         const std::string& phone) const {
-    // TODO
-    std::list<Entry*> l;
-    return nullptr;
+                                 const std::string& address,
+                                 const std::string& phone) const {
+    // TODO select entries
+    const std::vector<Entry*> l;
+    Response* r = new Response(true, "Todo liso", QUERY_TYPE::SELECT, l);
+
+    return r;
 }
 
 Response* Server::insert_entry(const std::string& name,
                           const std::string& address,
                           const std::string& phone) {
-    // TODO
+    // TODO check if entry exists
     Entry* entry = new Entry(name, address, phone);
     entries.push_back(entry);
 
-    return nullptr;
+    Response* r = new Response(true, "ATR perro", QUERY_TYPE::INSERT);
+    
+    return r;
 }
 
 void Server::run() {
