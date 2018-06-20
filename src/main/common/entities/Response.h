@@ -7,8 +7,8 @@
 #include "Entry.h"
 
 enum RESPONSE_BUFF_SIZE {
-    MSG = 256,
-    SELECTION = 1024
+    MSG = 60,
+    SELECTION = 32
 };
 
 typedef struct {

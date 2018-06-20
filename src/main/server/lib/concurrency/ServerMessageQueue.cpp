@@ -4,6 +4,7 @@
 #include <sys/msg.h>
 #include <system_error>
 #include <cstring>
+#include <iostream>
 
 #include "ServerMessageQueue.h"
 
@@ -16,12 +17,15 @@ int ServerMessageQueue::push(ServerMessage& msg) const {
     return queue.push(&data, sizeof(data));
 }
 
-ClientMessage ServerMessageQueue::pop() const {
+ClientMessage* ServerMessageQueue::pop() const {
     ClientMessageData data;
-    queue.pop(&data, 0, sizeof(ClientMessageData));
+    ssize_t received = queue.pop(&data, 0, sizeof(ClientMessageData));
+    if (received == 0) {
+        return nullptr;
+    }
+    std::cout << "Receiving msg with name: " << data.data.data.name << ", address: " << data.data.data.address << ", phone: " << data.data.data.phone << std::endl;
     Query query(data.data.operation, data.data.data.name, data.data.data.address, data.data.data.phone);
-    ClientMessage msg(data.mtype, query);
-    return msg;
+    return new ClientMessage(data.mtype, query);
 }
 
 ServerMessageQueue::~ServerMessageQueue() {

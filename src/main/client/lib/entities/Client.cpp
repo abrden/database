@@ -29,7 +29,7 @@ bool Client::add_entry(const std::string& name, const std::string& address, cons
 void Client::run() {
     // TODO read line from stdin
     std::string line;
-    std::cout << "Make a query (add <name,address,phone>, select <name>) or just exit." << std::endl;
+    std::cout << "Make a query (add <name,address,phone>, select <name,address,phone>) or just exit." << std::endl;
     std::cout << "> ";
     std::getline(std::cin, line);
     while (line != "exit") { // TODO sigint_handler.get_graceful_quit() == 0
@@ -42,6 +42,7 @@ void Client::run() {
         if (op == "add") {
             // Es necesario un lock??
             Entry entry(arg);
+            std::cout << "Add entry with name: " << entry.get_name() << ", address: " << entry.get_address() << ", phone: " << entry.get_phone() << std::endl;
             if (add_entry(entry.get_name(), entry.get_address(), entry.get_phone())) {
                 std::cout << "Success" << std::endl;
             } else {
@@ -50,6 +51,7 @@ void Client::run() {
         } else if (op == "select") {
             // Es necesario un lock??
             Entry entry(arg);
+            std::cout << "Select entry with name: " << entry.get_name() << ", address: " << entry.get_address() << ", phone: " << entry.get_phone() << std::endl;
             if (get_entry(entry.get_name(), entry.get_address(), entry.get_phone())) {
                std::cout << "Success" << std::endl;
             } else {

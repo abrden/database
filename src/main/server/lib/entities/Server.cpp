@@ -36,6 +36,7 @@ Response* Server::select_entries(const std::string& name,
                                  const std::string& phone) const {
     // TODO select entries
     const std::vector<Entry*> l;
+
     Response* r = new Response(true, "Todo liso", QUERY_TYPE::SELECT, l);
 
     return r;
@@ -55,15 +56,17 @@ Response* Server::insert_entry(const std::string& name,
 
 void Server::run() {
     while (sigint_handler.get_graceful_quit() == 0) {
-        ClientMessage cmsg = queue.pop();
-        Query query = cmsg.get_query();
+        ClientMessage* cmsg = queue.pop();
+        if (!cmsg) continue;
+        Query query = cmsg->get_query();
         Response* response;
         if (query.get_operation() == SELECT) {
             response = select_entries(query.get_name(), query.get_address(), query.get_phone());
         } if (query.get_operation() == INSERT) {
             response = insert_entry(query.get_name(), query.get_address(), query.get_phone());
         }
-        ServerMessage smsg(cmsg.get_mtype(), *response);
+        ServerMessage smsg(cmsg->get_mtype(), *response);
+        delete cmsg;
         queue.push(smsg);
     }
 }

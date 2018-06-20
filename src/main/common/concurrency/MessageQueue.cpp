@@ -26,7 +26,7 @@ int MessageQueue::push(void* data, size_t data_size) const {
     int sent = msgsnd(id, data, data_size - sizeof(long), 0);
     if (sent < 0) {
         std::string message = std::string("Error in msgsnd(): ") + std::string(strerror(errno));
-        throw std::system_error(errno, std::system_category(), message); 
+        throw std::system_error(errno, std::system_category(), message);
     }
     return sent;
 }
@@ -34,6 +34,9 @@ int MessageQueue::push(void* data, size_t data_size) const {
 ssize_t MessageQueue::pop(void* data, long msgtyp, size_t data_size) const {
     ssize_t received = msgrcv(id, data, data_size - sizeof(long), msgtyp, 0);
     if (received < 0) {
+        if (errno == EINTR) {
+            return 0;
+        }
         std::string message = std::string("Error in msgrcv(): ") + std::string(strerror(errno));
         throw std::system_error(errno, std::system_category(), message); 
     }
@@ -41,5 +44,5 @@ ssize_t MessageQueue::pop(void* data, long msgtyp, size_t data_size) const {
 }
 
 void MessageQueue::destroy() {
-    msgctl(id, IPC_RMID, nullptr);
+    msgctl(id, IPC_RMID, 0);
 }
