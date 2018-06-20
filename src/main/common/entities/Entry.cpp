@@ -1,5 +1,6 @@
 #include "Entry.h"
 
+#include <cstring>
 #include <sstream>
 
 const static char SEPARATOR = ',';
@@ -7,6 +8,22 @@ const static char SEPARATOR = ',';
 Entry::Entry(const std::string& name, const std::string& address, const std::string& phone)
         : name(name), address(address), phone(phone) {
     // TODO handle name > QUERY_BUFF_SIZE::NAME, etc
+}
+
+EntryData Entry::serialize() const {
+    EntryData e;
+    memset(&e, 0, sizeof(EntryData));
+
+    size_t len = name.copy(e.name, ENTRY_BUFF_SIZE::NAME, 0);
+    e.name[len] = '\0';
+
+    len = address.copy(e.address, ENTRY_BUFF_SIZE::ADDRESS, 0);
+    e.address[len] = '\0';
+
+    len = phone.copy(e.phone, ENTRY_BUFF_SIZE::PHONE, 0);
+    e.phone[len] = '\0';
+    
+    return e;
 }
 
 Entry::Entry(std::string& entry_str) {

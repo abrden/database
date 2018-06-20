@@ -19,7 +19,7 @@ int ServerMessageQueue::push(ServerMessage& msg) const {
 ClientMessage ServerMessageQueue::pop() const {
     ClientMessageData data;
     queue.pop(&data, 0, sizeof(ClientMessageData));
-    Query query(data.data.operation, data.data.name, data.data.address, data.data.phone);
+    Query query(data.data.operation, data.data.data.name, data.data.data.address, data.data.data.phone);
     ClientMessage msg(data.mtype, query);
     return msg;
 }

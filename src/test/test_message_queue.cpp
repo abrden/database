@@ -33,9 +33,9 @@ TEST_CASE( "Message queue", "[msgq]" ) {
 
         REQUIRE(received_msg.get_mtype() == cmsg.get_mtype());
         REQUIRE(received_query_data.operation == expected_query_data.operation);
-        REQUIRE(strcmp(received_query_data.name,expected_query_data.name) == 0);
-        REQUIRE(strcmp(received_query_data.address, expected_query_data.address) == 0);
-        REQUIRE(strcmp(received_query_data.phone, expected_query_data.phone) == 0);
+        REQUIRE(strcmp(received_query_data.data.name,expected_query_data.data.name) == 0);
+        REQUIRE(strcmp(received_query_data.data.address, expected_query_data.data.address) == 0);
+        REQUIRE(strcmp(received_query_data.data.phone, expected_query_data.data.phone) == 0);
     }
 
     SECTION("Server message") {
@@ -64,9 +64,9 @@ TEST_CASE( "Message queue", "[msgq]" ) {
 
         REQUIRE(received_msg.mtype == expected_msg.mtype);
         REQUIRE(received_msg.data[0].operation == expected_msg.data[0].operation);
-        REQUIRE(strcmp(received_msg.data[0].name, expected_msg.data[0].name) == 0);
-        REQUIRE(strcmp(received_msg.data[0].address, expected_msg.data[0].address) == 0);
-        REQUIRE(strcmp(received_msg.data[0].phone, expected_msg.data[0].phone) == 0);
+        REQUIRE(strcmp(received_msg.data[0].data.name, expected_msg.data[0].data.name) == 0);
+        REQUIRE(strcmp(received_msg.data[0].data.address, expected_msg.data[0].data.address) == 0);
+        REQUIRE(strcmp(received_msg.data[0].data.phone, expected_msg.data[0].data.phone) == 0);
 
         queue.destroy();
     }

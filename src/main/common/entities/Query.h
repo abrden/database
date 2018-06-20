@@ -4,31 +4,23 @@
 #include <string>
 #include <stddef.h>
 
+#include "Entry.h"
+
 enum QUERY_TYPE {
     SELECT,
     INSERT
 };
 
-enum QUERY_BUFF_SIZE {
-    NAME = 62,
-    ADDRESS = 121,
-    PHONE = 14
-};
-
 typedef struct {
     int operation;
-    char name[QUERY_BUFF_SIZE::NAME];
-    char address[QUERY_BUFF_SIZE::ADDRESS];
-    char phone[QUERY_BUFF_SIZE::PHONE];
+    EntryData data;
 } QueryData;
 
 class Query {
 
     private:
-        int operation;
-        std::string name;
-        std::string address;
-        std::string phone;
+        const int operation;
+        const Entry entry;
 
     public:
         Query(const int operation, const std::string& name, const std::string& address, const std::string& phone);

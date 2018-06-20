@@ -13,7 +13,7 @@ TEST_CASE("Query", "[entry]") {
     QueryData entry_data = entry.serialize();
 
     REQUIRE(entry_data.operation == query_type);
-    REQUIRE(strcmp(entry_data.name, name.c_str()) == 0);
-    REQUIRE(strcmp(entry_data.address, address.c_str()) == 0);
-    REQUIRE(strcmp(entry_data.phone, phone.c_str()) == 0);
+    REQUIRE(strcmp(entry_data.data.name, name.c_str()) == 0);
+    REQUIRE(strcmp(entry_data.data.address, address.c_str()) == 0);
+    REQUIRE(strcmp(entry_data.data.phone, phone.c_str()) == 0);
 }
