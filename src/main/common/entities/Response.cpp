@@ -17,13 +17,11 @@ ResponseData Response::serialize() const {
     r.msg[len] = '\0';
     r.len_selection = selection.size();
 
-    EntryData raw_entries[RESPONSE_BUFF_SIZE::SELECTION];
     for (size_t i = 0; i < r.len_selection; i++) {
-        //FIXME
         std::cout << selection[i]->get_name() << "," << selection[i]->get_address() << "," << selection[i]->get_phone() << std::endl;
-        raw_entries[i] = selection[i]->serialize();
+        EntryData entry_i = selection[i]->serialize();
+        memcpy(&r.selection[i], &entry_i, sizeof(EntryData));
     }
-    memcpy(r.selection, raw_entries, r.len_selection);
 
     //FIXME
     for (size_t i = 0; i < r.len_selection; i++) {
