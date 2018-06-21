@@ -29,6 +29,7 @@ class Response {
     public:
         Response(const bool ok, const std::string& msg, const int operation);
         Response(const bool ok, const std::string& msg, const int operation, const std::vector<Entry*>& selection);
+        Response(const Response& r);
         ResponseData serialize() const;
         bool get_ok() const;
         std::vector<Entry*> get_selection() const;

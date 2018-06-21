@@ -45,3 +45,9 @@ Response::~Response() {
         selection.pop_back();
     }
 }
+
+Response::Response(const Response& r) : ok(r.ok), operation(r.operation), msg(r.msg) {
+    for (auto it = r.selection.begin(); it != r.selection.end(); ++it) {
+        selection.push_back(new Entry((*it)->get_name(), (*it)->get_address(), (*it)->get_phone()));
+    }
+}
