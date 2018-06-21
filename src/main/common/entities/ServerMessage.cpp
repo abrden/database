@@ -1,18 +1,22 @@
 #include "ServerMessage.h"
 #include <cstring>
 
-ServerMessage::ServerMessage(const long mtype, const Response& response)
+ServerMessage::ServerMessage(const long mtype, const Response* response)
         : Message(mtype), response(response) {}
 
 ServerMessageData ServerMessage::serialize() const {
     ServerMessageData sm;
     memset(&sm, 0, sizeof(ServerMessageData));
     sm.mtype = get_mtype();
-    sm.data = response.serialize();
+    sm.data = response->serialize();
 
     return sm;
 }
 
-Response ServerMessage::get_response() const {
-    return response;
+Response* ServerMessage::get_response() const {
+    return new Response(*response);
+}
+
+ServerMessage::~ServerMessage() {
+    delete response;
 }

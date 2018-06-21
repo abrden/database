@@ -8,22 +8,35 @@
 
 Client::Client(const std::string &queue_file, const char queue_letter) : queue(queue_file, queue_letter) {}
 
-bool Client::get_entry(const std::string& name, const std::string& address, const std::string& phone) {
+Response* Client::get_entry(const std::string& name, const std::string& address, const std::string& phone) {
     Query query(QUERY_TYPE::SELECT, name, address, phone);
     ClientMessage cmsg(getpid(), query);
     queue.push(cmsg);
 
-    ServerMessage smsg = queue.pop(getpid());
-    return smsg.get_response().get_ok();
+    ServerMessage* smsg = queue.pop(getpid());
+    Response* response = smsg->get_response();
+
+    // FIXME remove
+    std::vector<Entry*> selection = response->get_selection();
+    for (std::vector<Entry*>::iterator it = selection.begin(); it != selection.end(); ++it) {
+        std::cout << (*it)->get_name() << "," << (*it)->get_address() << "," << (*it)->get_phone() << std::endl;
+    }
+
+    delete smsg;
+
+    return response;
 }
 
-bool Client::add_entry(const std::string& name, const std::string& address, const std::string& phone)  {
+bool Client::add_entry(const std::string& name, const std::string& address, const std::string& phone) {
     Query query(QUERY_TYPE::INSERT, name, address, phone);
     ClientMessage cmsg(getpid(), query);
     queue.push(cmsg);
 
-    ServerMessage smsg = queue.pop(getpid());
-    return smsg.get_response().get_ok();
+    ServerMessage* smsg = queue.pop(getpid());
+    bool ans = smsg->get_response()->get_ok();
+    delete smsg;
+
+    return ans;
 }
 
 void Client::run() {
@@ -52,11 +65,18 @@ void Client::run() {
             // Es necesario un lock??
             Entry entry(arg);
             std::cout << "Select entry with name: " << entry.get_name() << ", address: " << entry.get_address() << ", phone: " << entry.get_phone() << std::endl;
-            if (get_entry(entry.get_name(), entry.get_address(), entry.get_phone())) {
-               std::cout << "Success" << std::endl;
+
+            Response* response = get_entry(entry.get_name(), entry.get_address(), entry.get_phone());
+            if (response->get_ok()) {
+                std::vector<Entry*> selection = response->get_selection();
+                for (std::vector<Entry*>::iterator it = selection.begin(); it != selection.end(); ++it) {
+                    std::cout << (*it)->get_name() << "," << (*it)->get_address() << "," << (*it)->get_phone() << std::endl;
+                }
             } else {
                 std::cout << "Error" << std::endl;
             }
+            delete response;
+
         } else {
             std::cout << "Invalid query, try again" << std::endl;
         }
