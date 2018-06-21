@@ -18,15 +18,10 @@ ResponseData Response::serialize() const {
     r.len_selection = selection.size();
 
     for (size_t i = 0; i < r.len_selection; i++) {
-        std::cout << selection[i]->get_name() << "," << selection[i]->get_address() << "," << selection[i]->get_phone() << std::endl;
         EntryData entry_i = selection[i]->serialize();
         memcpy(&r.selection[i], &entry_i, sizeof(EntryData));
     }
 
-    //FIXME
-    for (size_t i = 0; i < r.len_selection; i++) {
-        std::cout << r.selection[i].name << "," << r.selection[i].address << "," << r.selection[i].phone << std::endl;
-    }
 
     return r;
 }

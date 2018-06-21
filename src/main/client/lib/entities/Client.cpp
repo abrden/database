@@ -16,12 +16,6 @@ Response* Client::get_entry(const std::string& name, const std::string& address,
     ServerMessage* smsg = queue.pop(getpid());
     Response* response = smsg->get_response();
 
-    // FIXME remove
-    std::vector<Entry*> selection = response->get_selection();
-    for (std::vector<Entry*>::iterator it = selection.begin(); it != selection.end(); ++it) {
-        std::cout << (*it)->get_name() << "," << (*it)->get_address() << "," << (*it)->get_phone() << std::endl;
-    }
-
     delete smsg;
 
     return response;
