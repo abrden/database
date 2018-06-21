@@ -33,8 +33,10 @@ bool Client::add_entry(const std::string& name, const std::string& address, cons
     queue.push(cmsg);
 
     ServerMessage* smsg = queue.pop(getpid());
-    bool ans = smsg->get_response()->get_ok();
+    Response* r = smsg->get_response();
+    bool ans = r->get_ok();
     delete smsg;
+    delete r;
 
     return ans;
 }
