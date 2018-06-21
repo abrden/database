@@ -35,10 +35,13 @@ Response* Server::select_entries(const std::string& name,
                                  const std::string& address,
                                  const std::string& phone) const {
     // TODO select entries
-    const std::vector<Entry*> l;
-
+    std::vector<Entry*> l;
+    Entry* e1 = new Entry("porti", "fidel", "123");
+    Entry* e2 = new Entry("agus", "araoz", "8878");
+    l.push_back(e1);
+    l.push_back(e2);
+    // Response destruye las entries que se le dan; va a faltar hacer una copia para que no desaparezcan de la db las entries seleccionadas
     Response* r = new Response(true, "Todo liso", QUERY_TYPE::SELECT, l);
-
     return r;
 }
 
@@ -65,9 +68,9 @@ void Server::run() {
         } if (query.get_operation() == INSERT) {
             response = insert_entry(query.get_name(), query.get_address(), query.get_phone());
         }
-        ServerMessage smsg(cmsg->get_mtype(), *response);
-        delete cmsg;
+        ServerMessage smsg(cmsg->get_mtype(), response);
         queue.push(smsg);
+        delete cmsg;
     }
 }
 

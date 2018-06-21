@@ -18,10 +18,19 @@ int ClientMessageQueue::push(ClientMessage& msg) const {
     return queue.push(&data, sizeof(data));
 }
 
-ServerMessage ClientMessageQueue::pop(long mtype) const {
+ServerMessage* ClientMessageQueue::pop(long mtype) const {
     ServerMessageData data;
     queue.pop(&data, mtype, sizeof(ServerMessageData));
-    Response response(data.data.ok, data.data.msg, data.data.operation);
-    ServerMessage msg(data.mtype, response);
-    return msg;
+    Response* response;
+    if (data.data.operation == INSERT) {
+        response = new Response(data.data.ok, data.data.msg, data.data.operation);
+    } else if (data.data.operation == SELECT) {
+        std::vector<Entry*> selection;
+        for (size_t i = 0; i < data.data.len_selection; i++) {
+            selection.push_back(new Entry(data.data.selection[i].name, data.data.selection[i].address, data.data.selection[i].phone));
+        }
+        response = new Response(data.data.ok, data.data.msg, data.data.operation, selection);
+    }
+
+    return new ServerMessage(data.mtype, response);
 }
