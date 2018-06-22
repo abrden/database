@@ -10,6 +10,22 @@ Entry::Entry(const std::string& name, const std::string& address, const std::str
     // TODO handle name > QUERY_BUFF_SIZE::NAME, etc
 }
 
+Entry::Entry(std::string& entry_str) {
+    std::stringstream ss(entry_str);
+    std::string arg;
+
+    std::getline(ss, arg, SEPARATOR);
+    name = arg;
+    std::getline(ss, arg, SEPARATOR);
+    address = arg;
+    std::getline(ss, arg, SEPARATOR);
+    phone = arg;
+}
+
+bool Entry::operator==(const Entry &e) const {
+    return name.compare(e.name) == 0 && address.compare(e.address) == 0 && phone.compare(e.phone);
+}
+
 EntryData Entry::serialize() const {
     EntryData e;
     memset(&e, 0, sizeof(EntryData));
@@ -24,18 +40,6 @@ EntryData Entry::serialize() const {
     e.phone[len] = '\0';
     
     return e;
-}
-
-Entry::Entry(std::string& entry_str) {
-    std::stringstream ss(entry_str);
-    std::string arg;
-
-    std::getline(ss, arg, SEPARATOR);
-    name = arg;
-    std::getline(ss, arg, SEPARATOR);
-    address = arg;
-    std::getline(ss, arg, SEPARATOR);
-    phone = arg;
 }
 
 std::string Entry::get_name() const {
@@ -55,4 +59,3 @@ std::string Entry::to_string() const {
     ss << name << SEPARATOR << address << SEPARATOR << phone << std::endl;
     return ss.str();
 }
-
