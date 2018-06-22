@@ -47,7 +47,28 @@ TEST_CASE("Database", "[db]") {
         std::vector<Entry*> entries = db.select_entries(&entry);
 
         REQUIRE_FALSE(entries.empty());
+        Entry* matching_entry = entries.at(0);
+        REQUIRE(*matching_entry == entry);
 
         delete entries[0];
+    }
+
+    SECTION("select_entries() with wildcards") {
+        Database db;
+        Entry entry_2("Juan Perez", "Balcarce 950", "0800-4444");
+        db.insert_entry(&entry);
+        db.insert_entry(&entry_2);
+        Entry query_entry("Juan Perez", "", "");
+
+        std::vector<Entry*> entries = db.select_entries(&query_entry);
+
+        REQUIRE_FALSE(entries.empty());
+        Entry* matching_entry_1 = entries.at(0);
+        Entry* matching_entry_2 = entries.at(1);
+        REQUIRE(*matching_entry_1 == entry);
+        REQUIRE(*matching_entry_2 == entry_2);
+
+        delete entries.at(0);
+        delete entries.at(1);
     }
 }
