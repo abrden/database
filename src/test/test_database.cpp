@@ -40,12 +40,14 @@ TEST_CASE("Database", "[db]") {
         REQUIRE(entries.empty());
     }
 
-//    SECTION("select_entries() with existent entry") {
-//        Database db;
-//        db.insert_entry(&entry);
-//
-//        std::vector entries = db.select_entries(&entry);
-//
-//        REQUIRE_FALSE(entries.empty());
-//    }
+    SECTION("select_entries() with existent entry") {
+        Database db;
+        db.insert_entry(&entry);
+
+        std::vector<Entry*> entries = db.select_entries(&entry);
+
+        REQUIRE_FALSE(entries.empty());
+
+        delete entries[0];
+    }
 }
