@@ -23,7 +23,7 @@ Entry::Entry(std::string& entry_str) {
 }
 
 bool Entry::operator==(const Entry &e) const {
-    return name.compare(e.name) == 0 && address.compare(e.address) == 0 && phone.compare(e.phone);
+    return name == e.name && address == e.address && phone == e.phone;
 }
 
 EntryData Entry::serialize() const {
