@@ -2,7 +2,9 @@
 #include "Database.h"
 #include "Entry.h"
 
-Database::Database() {}
+Database::Database(const std::string& db_file) : db_file(db_file) {
+    DatabasePersister::load_from_file(db_file, entries);
+}
 
 bool Database::entry_exists(const Entry *entry) const {
     for (auto e : entries) {
@@ -37,6 +39,7 @@ std::vector<Entry *> Database::select_entries(const Entry *entry) const {
 }
 
 Database::~Database() {
+    DatabasePersister::save_to_file(db_file, entries);
     for (auto e : entries) {
         delete e;
     }

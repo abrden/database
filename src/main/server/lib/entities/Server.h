@@ -13,14 +13,9 @@ class Server {
 
     private:
         Database db;
-        std::string& file;
-
         ServerMessageQueue queue;
         SIGINTHandler sigint_handler;
 
-        std::list<Entry*> entries;
-
-        void entries_to_file();
         Response* insert_entry(const std::string& name, const std::string& address, const std::string& phone);
         Response* select_entries(const std::string& name, const std::string& address, const std::string& phone) const;
 

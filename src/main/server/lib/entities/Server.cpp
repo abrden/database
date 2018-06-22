@@ -9,26 +9,8 @@
 #include "SignalHandler.h"
 
 Server::Server(const std::string& queue_file, const char queue_letter, std::string db_file)
-        : file(db_file), queue(queue_file, queue_letter) {
+        : db(db_file), queue(queue_file, queue_letter) {
     SignalHandler::get_instance()->register_handler(SIGINT, &sigint_handler);
-}
-
-void Server::entries_to_file() {
-    int fd = open(file.c_str(), O_WRONLY | O_CREAT, 0666);
-
-    for (auto const& entry : entries) {
-        std::string entry_str = entry->to_string();
-        std::cout << "[SERVER] Writing to file : " << entry_str << std::endl;
-        ssize_t bytes_written = write(fd, entry_str.c_str(), entry_str.size());
-        if ((unsigned long) bytes_written != entry_str.size()) {
-            close(fd);
-
-            std::string message = std::string("Error in write: could not write db file: ") + std::string(strerror(errno));
-            throw std::system_error(errno, std::system_category(), message);
-        }
-    }
-
-    close(fd);
 }
 
 Response* Server::select_entries(const std::string& name,
@@ -72,10 +54,5 @@ void Server::run() {
 }
 
 Server::~Server() {
-    entries_to_file();
-    while (!entries.empty()) {
-        delete entries.back();
-        entries.pop_back();
-    }
     SignalHandler::destroy();
 }

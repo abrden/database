@@ -4,36 +4,37 @@
 
 TEST_CASE("Database", "[db]") {
 
+    std::string db_file = "/tmp/test_db";
     Entry entry("Juan Perez", "Calle Falsa 123", "911");
 
     SECTION("entry_exists() with empty db") {
-        Database db;
+        Database db(db_file);
 
         REQUIRE_FALSE(db.entry_exists(&entry));
     }
 
     SECTION("entry_exists() with entry in the db") {
-        Database db;
+        Database db(db_file);
         db.insert_entry(&entry);
 
         REQUIRE(db.entry_exists(&entry));
     }
 
     SECTION("insert_entry() with non-duplicate entry") {
-        Database db;
+        Database db(db_file);
 
         REQUIRE_NOTHROW(db.insert_entry(&entry));
     }
 
     SECTION("insert_entry() with duplicate entry") {
-        Database db;
+        Database db(db_file);
         db.insert_entry(&entry);
 
         REQUIRE_THROWS_AS(db.insert_entry(&entry), std::runtime_error);
     }
 
     SECTION("select_entries() with non-existent entry") {
-        Database db;
+        Database db(db_file);
 
         std::vector<Entry*> entries = db.select_entries(&entry);
 
@@ -41,7 +42,7 @@ TEST_CASE("Database", "[db]") {
     }
 
     SECTION("select_entries() with existent entry") {
-        Database db;
+        Database db(db_file);
         db.insert_entry(&entry);
 
         std::vector<Entry*> entries = db.select_entries(&entry);
@@ -54,7 +55,7 @@ TEST_CASE("Database", "[db]") {
     }
 
     SECTION("select_entries() with wildcards") {
-        Database db;
+        Database db(db_file);
         Entry entry_2("Juan Perez", "Balcarce 950", "0800-4444");
         db.insert_entry(&entry);
         db.insert_entry(&entry_2);
