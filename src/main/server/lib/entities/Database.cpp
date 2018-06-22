@@ -25,7 +25,15 @@ void Database::insert_entry(Entry *entry) {
 }
 
 std::vector<Entry *> Database::select_entries(const Entry *entry) const {
-    return std::vector<Entry *>();
+    std::vector<Entry*> matching_entries;
+    for (auto e : entries) {
+        if (*e == *entry) {
+            // TODO check if copying it's okay
+            matching_entries.push_back(new Entry(*e));
+        }
+    }
+
+    return matching_entries;
 }
 
 Database::~Database() {
