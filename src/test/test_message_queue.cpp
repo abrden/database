@@ -1,10 +1,9 @@
 #include <cstring>
 #include <unistd.h>
-#include <src/main/common/entities/Query.h>
-#include "ClientMessage.h"
-#include "Query.h"
 #include "catch.hpp"
 
+#include "ClientMessage.h"
+#include "Query.h"
 #include "MessageQueue.h"
 #include "ServerMessageQueue.h"
 #include "ClientMessageQueue.h"
