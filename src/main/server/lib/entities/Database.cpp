@@ -19,7 +19,8 @@ void Database::insert_entry(Entry *entry) {
         throw std::runtime_error(message);
     } else {
         // TODO check if we should insert the received entry or create a copy of it
-        entries.push_back(entry);
+        Entry* entry_to_insert = new Entry(*entry);
+        entries.push_back(entry_to_insert);
     }
 }
 
