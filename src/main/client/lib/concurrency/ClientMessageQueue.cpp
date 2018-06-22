@@ -20,7 +20,9 @@ int ClientMessageQueue::push(ClientMessage& msg) const {
 
 ServerMessage* ClientMessageQueue::pop(long mtype) const {
     ServerMessageData data;
-    queue.pop(&data, mtype, sizeof(ServerMessageData));
+    ssize_t received = queue.pop(&data, mtype, sizeof(ServerMessageData));
+    if (received == 0) return nullptr;
+
     Response* response;
     if (data.data.operation == INSERT) {
         response = new Response(data.data.ok, data.data.msg, data.data.operation);

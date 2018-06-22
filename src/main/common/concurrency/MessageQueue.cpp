@@ -32,6 +32,7 @@ int MessageQueue::push(void* data, size_t data_size) const {
 }
 
 ssize_t MessageQueue::pop(void* data, long msgtyp, size_t data_size) const {
+    size_t bytes_to_receive = data_size - sizeof(long);
     ssize_t received = msgrcv(id, data, data_size - sizeof(long), msgtyp, 0);
     if (received < 0) {
         if (errno == EINTR) {
@@ -39,6 +40,9 @@ ssize_t MessageQueue::pop(void* data, long msgtyp, size_t data_size) const {
         }
         std::string message = std::string("Error in msgrcv(): ") + std::string(strerror(errno));
         throw std::system_error(errno, std::system_category(), message); 
+    } else if (static_cast<size_t>(received) < bytes_to_receive) {
+        std::string message = "Error in msgrcv(): Received less bytes than expected";
+        throw std::runtime_error(message);
     }
     return received;
 }
