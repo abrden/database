@@ -27,7 +27,7 @@ void Database::insert_entry(Entry *entry) {
 std::vector<Entry *> Database::select_entries(const Entry *entry) const {
     std::vector<Entry*> matching_entries;
     for (auto e : entries) {
-        if (*e == *entry) {
+        if (e->weak_equals(*entry)) {
             // TODO check if copying it's okay
             matching_entries.push_back(new Entry(*e));
         }
