@@ -34,25 +34,22 @@ void Server::entries_to_file() {
 Response* Server::select_entries(const std::string& name,
                                  const std::string& address,
                                  const std::string& phone) const {
-    // TODO select entries
-    std::vector<Entry*> l;
-    Entry* e1 = new Entry("porti", "fidel", "123");
-    Entry* e2 = new Entry("agus", "araoz", "8878");
-    l.push_back(e1);
-    l.push_back(e2);
-    // Response destruye las entries que se le dan; va a faltar hacer una copia para que no desaparezcan de la db las entries seleccionadas
-    Response* r = new Response(true, "Todo liso", QUERY_TYPE::SELECT, l);
-    return r;
+    Entry entry(name, address, phone);
+    std::vector<Entry*> entries = db.select_entries(&entry);
+    return new Response(true, "Success, sending matching entries", QUERY_TYPE::SELECT, entries);
 }
 
 Response* Server::insert_entry(const std::string& name,
                           const std::string& address,
                           const std::string& phone) {
-    // TODO check if entry exists
-    Entry* entry = new Entry(name, address, phone);
-    entries.push_back(entry);
-
-    Response* r = new Response(true, "ATR perro", QUERY_TYPE::INSERT);
+    Entry entry(name, address, phone);
+    Response* r;
+    if (db.entry_exists(&entry)) {
+        r = new Response(false, "Error on INSERT: entry already exists in the database", QUERY_TYPE::INSERT);
+    } else {
+        db.insert_entry(&entry);
+        r = new Response(true, "Success, entry inserted", QUERY_TYPE::INSERT);
+    }
     
     return r;
 }

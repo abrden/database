@@ -4,6 +4,7 @@
 #include <sys/types.h>
 #include <list>
 
+#include "Database.h"
 #include "ServerMessageQueue.h"
 #include "Entry.h"
 #include "SIGINTHandler.h"
@@ -11,6 +12,7 @@
 class Server {
 
     private:
+        Database db;
         std::string& file;
 
         ServerMessageQueue queue;
