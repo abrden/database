@@ -9,17 +9,11 @@
 #include "ServerMessageQueue.h"
 #include "ClientMessageQueue.h"
 
-
-typedef struct {
-    long mtype;
-    QueryData data[2];
-} TestMessage;
-
 TEST_CASE( "Message queue", "[msgq]" ) {
     const std::string queue_file = "/bin/bash";
     const char queue_letter = 'A';
 
-    SECTION("Client message") {
+    SECTION("with a client message") {
         ServerMessageQueue s(queue_file, queue_letter);
         ClientMessageQueue c(queue_file, queue_letter);
         Query query(SELECT, "Juan Perez", "Calle Falsa 123", "0123456789");
@@ -40,37 +34,45 @@ TEST_CASE( "Message queue", "[msgq]" ) {
         delete received_msg;
     }
 
-    SECTION("Server message") {
-        // TODO refactor this
-        MessageQueue queue;
-        queue.create(queue_file, queue_letter);
+    SECTION("with a server message") {
+        // Setup
+        ServerMessageQueue sv_queue(queue_file, queue_letter);
+        ClientMessageQueue cl_queue(queue_file, queue_letter);
 
-        Query query(SELECT, "Juan Perez", "Calle Falsa 123", "0123456789");
-        Query query2(SELECT, "Esteban Quito", "Nazca 500", "911");
-        QueryData data[] = {query.serialize(), query2.serialize()};
-        TestMessage expected_msg;
-        memset(&expected_msg, 0, sizeof(TestMessage));
-        expected_msg.mtype = 1;
-        memcpy(expected_msg.data, data, sizeof(QueryData) * 2);
+        Entry* entry_1 = new Entry("Juan Perez", "Calle Falsa 123", "0123456789");
+        Entry* entry_2 = new Entry("Esteban Quito", "Nazca 500", "911");
+        std::vector<Entry*> entries = { entry_1, entry_2 };
 
-        {
-            TestMessage sent_msg;
-            memset(&sent_msg, 0, sizeof(TestMessage));
-            sent_msg.mtype = 1;
-            memcpy(sent_msg.data, data, sizeof(QueryData) * 2);
-            queue.push(&sent_msg, sizeof(TestMessage)); 
-        }
-        
-        TestMessage received_msg;
-        queue.pop(&received_msg, 0, sizeof(TestMessage));
+        Response* sent_response = new Response(true, "Test message", QUERY_TYPE::SELECT, entries);
+        ServerMessage smsg(1, sent_response);
+        ServerMessageData expected_smsg_data = smsg.serialize();
 
-        REQUIRE(received_msg.mtype == expected_msg.mtype);
-        REQUIRE(received_msg.data[0].operation == expected_msg.data[0].operation);
-        REQUIRE(strcmp(received_msg.data[0].data.name, expected_msg.data[0].data.name) == 0);
-        REQUIRE(strcmp(received_msg.data[0].data.address, expected_msg.data[0].data.address) == 0);
-        REQUIRE(strcmp(received_msg.data[0].data.phone, expected_msg.data[0].data.phone) == 0);
+        sv_queue.push(smsg);
+        ServerMessage* rcvd_smsg = cl_queue.pop(0);
+        ServerMessageData rcvd_smsg_data = rcvd_smsg->serialize();
 
-        queue.destroy();
+        // Testing general data
+        REQUIRE(rcvd_smsg_data.mtype == expected_smsg_data.mtype);
+        REQUIRE(rcvd_smsg_data.data.operation == expected_smsg_data.data.operation);
+        REQUIRE(strcmp(rcvd_smsg_data.data.msg, expected_smsg_data.data.msg) == 0);
+        REQUIRE(rcvd_smsg_data.data.len_selection == expected_smsg_data.data.len_selection);  
+
+        // Testing entries
+        EntryData rcvd_entry_1 = rcvd_smsg_data.data.selection[0];
+        EntryData expected_entry_1 = expected_smsg_data.data.selection[0];
+
+        REQUIRE(strcmp(rcvd_entry_1.name, expected_entry_1.name) == 0);
+        REQUIRE(strcmp(rcvd_entry_1.address, expected_entry_1.address) == 0);
+        REQUIRE(strcmp(rcvd_entry_1.phone, expected_entry_1.phone) == 0);
+
+        EntryData rcvd_entry_2 = rcvd_smsg_data.data.selection[1];
+        EntryData expected_entry_2 = expected_smsg_data.data.selection[1];
+
+        REQUIRE(strcmp(rcvd_entry_2.name, expected_entry_2.name) == 0);
+        REQUIRE(strcmp(rcvd_entry_2.address, expected_entry_2.address) == 0);
+        REQUIRE(strcmp(rcvd_entry_2.phone, expected_entry_2.phone) == 0);
+
+        delete rcvd_smsg;
     }
 }
 
