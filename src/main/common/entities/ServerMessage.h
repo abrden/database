@@ -11,11 +11,13 @@ typedef struct {
 
 class ServerMessage : public Message {
     private:
-        Response response;
+        const Response* response;
 
     public:
-        ServerMessage(const long mtype, const Response& response);
+        ServerMessage(const long mtype, const Response* response);
         ServerMessageData serialize() const;
+        Response* get_response() const;
+        ~ServerMessage();
 };
 
 
