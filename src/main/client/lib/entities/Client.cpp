@@ -5,8 +5,11 @@
 #include <unistd.h>
 #include "Entry.h"
 #include "Query.h"
+#include "SignalHandler.h"
 
-Client::Client(const std::string &queue_file, const char queue_letter) : queue(queue_file, queue_letter) {}
+Client::Client(const std::string &queue_file, const char queue_letter) : queue(queue_file, queue_letter) {
+    SignalHandler::get_instance()->register_handler(SIGINT, &sigint_handler);
+}
 
 Response* Client::get_entry(const std::string& name, const std::string& address, const std::string& phone) {
     Query query(QUERY_TYPE::SELECT, name, address, phone);
@@ -39,7 +42,7 @@ void Client::run() {
     std::cout << "Make a query (insert <name,address,phone>, select <name,address,phone>) or just exit." << std::endl;
     std::cout << "> ";
     std::getline(std::cin, line);
-    while (line != "exit") { // TODO sigint_handler.get_graceful_quit() == 0
+    while (line != "exit" && sigint_handler.get_graceful_quit() == 0) {
         std::stringstream ss(line);
         std::string op;
         std::getline(ss, op, ' ');
@@ -57,6 +60,8 @@ void Client::run() {
             } else {
                 std::cout << "Error: " << response->get_message() << std::endl;
             }
+            delete response;
+
         } else if (op == "select") {
             // Es necesario un lock??
             Entry entry(arg);
@@ -74,10 +79,14 @@ void Client::run() {
             }
             delete response;
 
-        } else if (op != "") {
+        } else if (!op.empty()) {
             std::cout << "Invalid query, try again" << std::endl;
         }
         std::cout << "> ";
         std::getline(std::cin, line);
     }
+}
+
+Client::~Client() {
+    SignalHandler::destroy();
 }
