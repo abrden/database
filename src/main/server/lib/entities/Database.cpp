@@ -16,7 +16,7 @@ bool Database::entry_exists(const std::string &name, const std::string &address,
 
 void Database::insert_entry(const std::string &name, const std::string &address, const std::string &phone) {
     if (entry_exists(name, address, phone)) {
-        std::string message = "Error in insert_entry(): Entry exists";
+        std::string message = "Entry already exists";
         throw std::runtime_error(message);
     } else {
         auto entry_to_insert = new Entry(name, address, phone);

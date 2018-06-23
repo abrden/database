@@ -12,7 +12,9 @@ Client::Client(const std::string &queue_file, const char queue_letter) : queue(q
 }
 
 Response* Client::get_entry(const std::string& name, const std::string& address, const std::string& phone) {
+    // FIXME
     Query query(QUERY_TYPE::SELECT, name, address, phone);
+    //
     ClientMessage cmsg(getpid(), query);
     queue.push(cmsg);
 
@@ -25,7 +27,9 @@ Response* Client::get_entry(const std::string& name, const std::string& address,
 }
 
 Response* Client::insert_entry(const std::string &name, const std::string &address, const std::string &phone) {
+    // FIXME I throw an exception when strings are exceeded, but I shouldnt, I shoud let the server tell me that
     Query query(QUERY_TYPE::INSERT, name, address, phone);
+    //
     ClientMessage cmsg(getpid(), query);
     queue.push(cmsg);
 

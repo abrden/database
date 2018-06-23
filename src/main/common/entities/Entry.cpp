@@ -8,7 +8,16 @@ const static char SEPARATOR = ',';
 
 Entry::Entry(const std::string& name, const std::string& address, const std::string& phone)
         : name(name), address(address), phone(phone) {
-    // TODO handle name > QUERY_BUFF_SIZE::NAME, etc
+    if (name.size() > ENTRY_BUFF_SIZE::NAME - 1) {
+        std::string message = "Name size exceeded";
+        throw std::runtime_error(message);
+    } else if (address.size() > ENTRY_BUFF_SIZE::ADDRESS - 1) {
+        std::string message = "Address size exceeded";
+        throw std::runtime_error(message);
+    } else if (phone.size() > ENTRY_BUFF_SIZE::PHONE - 1) {
+        std::string message = "Phone size exceeded";
+        throw std::runtime_error(message);
+    }
 }
 
 Entry::Entry(std::string& entry_str) {
@@ -17,8 +26,10 @@ Entry::Entry(std::string& entry_str) {
 
     std::getline(ss, arg, SEPARATOR);
     name = arg;
+
     std::getline(ss, arg, SEPARATOR);
     address = arg;
+
     std::getline(ss, arg, SEPARATOR);
     phone = arg;
 }
