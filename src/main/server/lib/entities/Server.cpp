@@ -9,51 +9,28 @@
 #include "SignalHandler.h"
 
 Server::Server(const std::string& queue_file, const char queue_letter, std::string db_file)
-        : file(db_file), queue(queue_file, queue_letter) {
+        : db(db_file), queue(queue_file, queue_letter) {
     SignalHandler::get_instance()->register_handler(SIGINT, &sigint_handler);
-}
-
-void Server::entries_to_file() {
-    int fd = open(file.c_str(), O_WRONLY | O_CREAT, 0666);
-
-    for (auto const& entry : entries) {
-        std::string entry_str = entry->to_string();
-        std::cout << "[SERVER] Writing to file : " << entry_str << std::endl;
-        ssize_t bytes_written = write(fd, entry_str.c_str(), entry_str.size());
-        if ((unsigned long) bytes_written != entry_str.size()) {
-            close(fd);
-
-            std::string message = std::string("Error in write: could not write db file: ") + std::string(strerror(errno));
-            throw std::system_error(errno, std::system_category(), message);
-        }
-    }
-
-    close(fd);
 }
 
 Response* Server::select_entries(const std::string& name,
                                  const std::string& address,
                                  const std::string& phone) const {
-    // TODO select entries
-    std::vector<Entry*> l;
-    Entry* e1 = new Entry("porti", "fidel", "123");
-    Entry* e2 = new Entry("agus", "araoz", "8878");
-    l.push_back(e1);
-    l.push_back(e2);
-    // Response destruye las entries que se le dan; va a faltar hacer una copia para que no desaparezcan de la db las entries seleccionadas
-    Response* r = new Response(true, "Todo liso", QUERY_TYPE::SELECT, l);
-    return r;
+    std::vector<Entry*> entries = db.select_entries(name, address, phone);
+    return new Response(true, "Success, sending matching entries", QUERY_TYPE::SELECT, entries);
 }
 
 Response* Server::insert_entry(const std::string& name,
                           const std::string& address,
                           const std::string& phone) {
-    // TODO check if entry exists
-    Entry* entry = new Entry(name, address, phone);
-    entries.push_back(entry);
+    Response* r;
+    try {
+        db.insert_entry(name, address, phone);
+        r = new Response(true, "Success, entry inserted", QUERY_TYPE::INSERT);
+    } catch (const std::runtime_error&) {
+        r = new Response(false, "Error on INSERT: entry already exists in the database", QUERY_TYPE::INSERT);
+    }
 
-    Response* r = new Response(true, "ATR perro", QUERY_TYPE::INSERT);
-    
     return r;
 }
 
@@ -75,10 +52,5 @@ void Server::run() {
 }
 
 Server::~Server() {
-    entries_to_file();
-    while (!entries.empty()) {
-        delete entries.back();
-        entries.pop_back();
-    }
     SignalHandler::destroy();
 }

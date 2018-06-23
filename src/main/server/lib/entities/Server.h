@@ -4,6 +4,7 @@
 #include <sys/types.h>
 #include <list>
 
+#include "Database.h"
 #include "ServerMessageQueue.h"
 #include "Entry.h"
 #include "SIGINTHandler.h"
@@ -11,14 +12,10 @@
 class Server {
 
     private:
-        std::string& file;
-
+        Database db;
         ServerMessageQueue queue;
         SIGINTHandler sigint_handler;
 
-        std::list<Entry*> entries;
-
-        void entries_to_file();
         Response* insert_entry(const std::string& name, const std::string& address, const std::string& phone);
         Response* select_entries(const std::string& name, const std::string& address, const std::string& phone) const;
 
