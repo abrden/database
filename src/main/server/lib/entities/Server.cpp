@@ -16,20 +16,18 @@ Server::Server(const std::string& queue_file, const char queue_letter, std::stri
 Response* Server::select_entries(const std::string& name,
                                  const std::string& address,
                                  const std::string& phone) const {
-    Entry entry(name, address, phone);
-    std::vector<Entry*> entries = db.select_entries(&entry);
+    std::vector<Entry*> entries = db.select_entries(name, address, phone);
     return new Response(true, "Success, sending matching entries", QUERY_TYPE::SELECT, entries);
 }
 
 Response* Server::insert_entry(const std::string& name,
                           const std::string& address,
                           const std::string& phone) {
-    Entry entry(name, address, phone);
     Response* r;
-    if (db.entry_exists(&entry)) {
+    if (db.entry_exists(name, address, phone)) {
         r = new Response(false, "Error on INSERT: entry already exists in the database", QUERY_TYPE::INSERT);
     } else {
-        db.insert_entry(&entry);
+        db.insert_entry(name, address, phone);
         r = new Response(true, "Success, entry inserted", QUERY_TYPE::INSERT);
     }
     
