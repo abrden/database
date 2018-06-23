@@ -2,6 +2,8 @@
 #include <iostream>
 #include <unistd.h>
 #include <cstring>
+#include <system_error>
+
 #include "DatabasePersister.h"
 
 void DatabasePersister::save_to_file(const std::string& file, const std::list<Entry*>& entries) {
