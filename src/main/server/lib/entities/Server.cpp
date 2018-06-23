@@ -41,9 +41,15 @@ void Server::run() {
         Query query = cmsg->get_query();
         Response* response;
         if (query.get_operation() == SELECT) {
+            std::cout << "Selecting query with name: " << query.get_name() << ", address: " << query.get_address() << ", phone: " << query.get_phone() << std::endl;
             response = select_entries(query.get_name(), query.get_address(), query.get_phone());
+            std::string status = response->get_ok() ? "Success" : "Error";
+            std::cout << status << std::endl;
         } if (query.get_operation() == INSERT) {
+            std::cout << "Inserting query with name: " << query.get_name() << ", address: " << query.get_address() << ", phone: " << query.get_phone() << std::endl;
             response = insert_entry(query.get_name(), query.get_address(), query.get_phone());
+            std::string status = response->get_ok() ? "Success" : "Error";
+            std::cout << status << std::endl;
         }
         ServerMessage smsg(cmsg->get_mtype(), response);
         queue.push(smsg);
