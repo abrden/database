@@ -2,6 +2,7 @@
 
 #include <cstring>
 #include <sstream>
+#include <algorithm>
 
 const static char SEPARATOR = ',';
 
@@ -27,9 +28,23 @@ bool Entry::operator==(const Entry &e) const {
 }
 
 bool Entry::matches(const Entry &e) const {
-    bool equals_name = e.name == "" ? true : name == e.name;
-    bool equals_address = e.address == "" ? true : address == e.address;
-    bool equals_phone = e.phone == "" ? true : phone == e.phone;
+    std::string e1_name = name;
+    std::string e1_address = address;
+    std::string e1_phone = phone;
+    std::string e2_name = e.name;
+    std::string e2_address = e.address;
+    std::string e2_phone = e.phone;
+
+    std::transform(e1_name.begin(), e1_name.end(), e1_name.begin(), ::tolower);
+    std::transform(e1_address.begin(), e1_address.end(), e1_address.begin(), ::tolower);
+    std::transform(e1_phone.begin(), e1_phone.end(), e1_phone.begin(), ::tolower);
+    std::transform(e2_name.begin(), e2_name.end(), e2_name.begin(), ::tolower);
+    std::transform(e2_address.begin(), e2_address.end(), e2_address.begin(), ::tolower);
+    std::transform(e2_phone.begin(), e2_phone.end(), e2_phone.begin(), ::tolower);
+
+    bool equals_name = e2_name == "" ? true : e1_name == e2_name;
+    bool equals_address = e2_address == "" ? true : e1_address == e2_address;
+    bool equals_phone = e2_phone == "" ? true : e1_phone == e2_phone;
     return equals_name && equals_address && equals_phone;
 }
 
