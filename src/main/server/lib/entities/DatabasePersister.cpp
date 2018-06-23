@@ -12,7 +12,7 @@ void DatabasePersister::save_to_file(const std::string& file, const std::list<En
 
     for (auto const& entry : entries) {
         std::string entry_str = entry->to_string();
-        std::cout << "[SERVER] Writing to file : " << entry_str << std::endl;
+        std::cout << "[SERVER] Writing to file : " << entry_str;
         ssize_t bytes_written = write(fd, entry_str.c_str(), entry_str.size());
         if ((unsigned long) bytes_written != entry_str.size()) {
             close(fd);
