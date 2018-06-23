@@ -74,7 +74,7 @@ void Client::run() {
             }
             delete response;
 
-        } else {
+        } else if (op != "") {
             std::cout << "Invalid query, try again" << std::endl;
         }
         std::cout << "> ";
