@@ -1,4 +1,4 @@
-# database
+# DataBase [![Build Status](https://travis-ci.org/abrden/database.svg?branch=master)](https://travis-ci.org/abrden/database)
 Trabajo Práctico 2 - 75.59 Técnicas de Programación Concurrente I (FIUBA)
 
 ### Build
