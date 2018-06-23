@@ -64,11 +64,12 @@ void Client::run() {
             Response* response = get_entry(entry.get_name(), entry.get_address(), entry.get_phone());
             if (response->get_ok()) {
                 std::vector<Entry*> selection = response->get_selection();
+                std::cout << selection.size() << " results." << std::endl;
                 for (std::vector<Entry*>::iterator it = selection.begin(); it != selection.end(); ++it) {
                     std::cout << (*it)->get_name() << "," << (*it)->get_address() << "," << (*it)->get_phone() << std::endl;
                 }
             } else {
-                std::cout << "Error" << std::endl;
+                std::cout << "Error: " << response->get_message() << std::endl;
             }
             delete response;
 

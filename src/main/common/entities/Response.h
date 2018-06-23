@@ -32,6 +32,7 @@ class Response {
         Response(const Response& r);
         ResponseData serialize() const;
         bool get_ok() const;
+        std::string get_message() const;
         std::vector<Entry*> get_selection() const;
         ~Response();
 };
