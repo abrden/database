@@ -26,7 +26,7 @@ bool Entry::operator==(const Entry &e) const {
     return name == e.name && address == e.address && phone == e.phone;
 }
 
-bool Entry::weak_equals(const Entry &e) const {
+bool Entry::matches(const Entry &e) const {
     bool equals_name = e.name == "" ? true : name == e.name;
     bool equals_address = e.address == "" ? true : address == e.address;
     bool equals_phone = e.phone == "" ? true : phone == e.phone;

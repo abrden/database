@@ -24,7 +24,7 @@ class Entry {
         Entry(const std::string& name, const std::string& address, const std::string& phone);
         Entry(std::string& entry_str);
         bool operator ==(const Entry& e) const;
-        bool weak_equals(const Entry& e) const;
+        bool matches(const Entry &e) const;
         EntryData serialize() const;
         std::string get_name() const;
         std::string get_address() const;
