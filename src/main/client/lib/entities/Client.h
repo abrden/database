@@ -10,7 +10,7 @@ class Client {
     private:
         ClientMessageQueue queue;
 
-        bool insert_entry(const std::string &name, const std::string &address, const std::string &phone);
+        Response* insert_entry(const std::string &name, const std::string &address, const std::string &phone);
         Response* get_entry(const std::string& name, const std::string& address, const std::string& phone);
 
     public:
