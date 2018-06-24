@@ -52,7 +52,7 @@ void Client::run() {
         if (op == "insert") {
             // Es necesario un lock??
             Entry entry(arg);
-            std::cout << "Inserting entry with name: " << entry.get_name() << ", address: " << entry.get_address() << ", phone: " << entry.get_phone() << std::endl;
+            std::cout << "Inserting entry: " << entry << std::endl;
 
             Response* response = insert_entry(entry.get_name(), entry.get_address(), entry.get_phone());
             std::cout << response->get_message() << std::endl;
@@ -61,7 +61,7 @@ void Client::run() {
         } else if (op == "select") {
             // Es necesario un lock??
             Entry entry(arg);
-            std::cout << "Selecting entries with name: " << entry.get_name() << ", address: " << entry.get_address() << ", phone: " << entry.get_phone() << std::endl;
+            std::cout << "Selecting entries: " << entry << std::endl;
 
             Response* response = get_entry(entry.get_name(), entry.get_address(), entry.get_phone());
             if (response->get_ok()) {
