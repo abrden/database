@@ -55,11 +55,7 @@ void Client::run() {
             std::cout << "Inserting entry with name: " << entry.get_name() << ", address: " << entry.get_address() << ", phone: " << entry.get_phone() << std::endl;
 
             Response* response = insert_entry(entry.get_name(), entry.get_address(), entry.get_phone());
-            if (response->get_ok()) {
-                std::cout << "Success" << std::endl;
-            } else {
-                std::cout << "Error: " << response->get_message() << std::endl;
-            }
+            std::cout << response->get_message() << std::endl;
             delete response;
 
         } else if (op == "select") {
