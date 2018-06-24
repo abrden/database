@@ -81,3 +81,7 @@ std::string Entry::to_string() const {
     ss << name << SEPARATOR << address << SEPARATOR << phone << std::endl;
     return ss.str();
 }
+
+std::ostream &operator<<(std::ostream &os, const Entry &entry) {
+    return os << entry.name << SEPARATOR << entry.address << SEPARATOR << entry.phone;
+}
