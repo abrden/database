@@ -26,7 +26,7 @@ Response* Server::insert_entry(const std::string& name,
     Response* r;
     try {
         db.insert_entry(name, address, phone);
-        r = new Response(true, "Succes: Entry inserted", QUERY_TYPE::INSERT);
+        r = new Response(true, "Success: Entry inserted", QUERY_TYPE::INSERT);
     } catch (const std::runtime_error&) {
         r = new Response(false, "Error: Entry already exists in the database", QUERY_TYPE::INSERT);
     }
