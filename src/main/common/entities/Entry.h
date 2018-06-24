@@ -2,6 +2,7 @@
 #define DATABASE_ENTRY_H
 
 #include <string>
+#include <ostream>
 
 enum ENTRY_BUFF_SIZE {
     NAME = 62,
@@ -24,6 +25,7 @@ class Entry {
         Entry(const std::string& name, const std::string& address, const std::string& phone);
         Entry(std::string& entry_str);
         bool operator ==(const Entry& e) const;
+        friend std::ostream &operator<<(std::ostream &os, const Entry &entry);
         bool matches(const Entry &e) const;
         EntryData serialize() const;
         std::string get_name() const;
