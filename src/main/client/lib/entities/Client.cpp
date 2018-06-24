@@ -72,7 +72,7 @@ void Client::run() {
                 std::vector<Entry*> selection = response->get_selection();
                 std::cout << selection.size() << " results." << std::endl;
                 for (std::vector<Entry*>::iterator it = selection.begin(); it != selection.end(); ++it) {
-                    std::cout << (*it)->get_name() << "," << (*it)->get_address() << "," << (*it)->get_phone() << std::endl;
+                    std::cout << *(*it) << std::endl;
                 }
             } else {
                 std::cout << "Error: " << response->get_message() << std::endl;
