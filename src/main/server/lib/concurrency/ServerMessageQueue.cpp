@@ -4,7 +4,6 @@
 #include <sys/msg.h>
 #include <system_error>
 #include <cstring>
-#include <iostream>
 
 #include "ServerMessageQueue.h"
 
@@ -23,7 +22,6 @@ ClientMessage* ServerMessageQueue::pop() const {
     if (received == 0) {
         return nullptr;
     }
-    std::cout << "Receiving msg with name: " << data.data.data.name << ", address: " << data.data.data.address << ", phone: " << data.data.data.phone << std::endl;
     Query query(data.data.operation, data.data.data.name, data.data.data.address, data.data.data.phone);
     return new ClientMessage(data.mtype, query);
 }

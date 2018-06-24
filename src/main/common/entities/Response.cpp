@@ -30,6 +30,10 @@ bool Response::get_ok() const {
     return ok;
 }
 
+std::string Response::get_message() const {
+    return msg;
+}
+
 std::vector<Entry*> Response::get_selection() const {
     return selection;
 }
