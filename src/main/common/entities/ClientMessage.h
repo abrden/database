@@ -6,15 +6,18 @@
 
 typedef struct {
     long mtype;
+    int sender_id;
     QueryData data;
 } ClientMessageData;
 
 class ClientMessage : public Message {
     private:
+        const int sender_id;
         Query query;
     public:
-        ClientMessage(long mtype, const Query& query);
+        ClientMessage(const int sender_id, const Query& query);
         ClientMessageData serialize() const;
+        int get_sender_id() const;
         Query get_query() const;
 };
 

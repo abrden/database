@@ -51,7 +51,7 @@ void Server::run() {
             std::string status = response->get_ok() ? "Success" : "Error";
             std::cout << status << std::endl;
         }
-        ServerMessage smsg(cmsg->get_mtype(), response);
+        ServerMessage smsg(cmsg->get_sender_id(), response);
         queue.push(smsg);
         delete cmsg;
     }
