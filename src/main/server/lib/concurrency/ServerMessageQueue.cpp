@@ -5,6 +5,7 @@
 #include <system_error>
 #include <cstring>
 
+#include "ClientMessage.h"
 #include "ServerMessageQueue.h"
 
 ServerMessageQueue::ServerMessageQueue(const std::string& file, const char letter){
@@ -23,7 +24,7 @@ ClientMessage* ServerMessageQueue::pop() const {
         return nullptr;
     }
     Query query(data.data.operation, data.data.data.name, data.data.data.address, data.data.data.phone);
-    return new ClientMessage(data.mtype, query);
+    return new ClientMessage(data.sender_id, query);
 }
 
 ServerMessageQueue::~ServerMessageQueue() {

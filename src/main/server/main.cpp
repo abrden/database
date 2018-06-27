@@ -6,8 +6,13 @@
 int main(int argc, char* argv[]) {
     std::cout << "Hello, World! I'm the server" << std::endl;
 
-    Server s(MessageQueueInfo::FILE, MessageQueueInfo::LETTER, std::string(argv[1]));
-    s.run();
+    try {
+        Server s(MessageQueueInfo::FILE, MessageQueueInfo::LETTER, std::string(argv[1]));
+        s.run();
 
-    return 0;
+        return 0;
+    } catch (const std::exception& e) {
+        std::cerr << e.what() << std::endl;
+        return -1;
+    }
 }
