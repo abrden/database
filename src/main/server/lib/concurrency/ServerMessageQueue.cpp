@@ -4,8 +4,8 @@
 #include <sys/msg.h>
 #include <system_error>
 #include <cstring>
-#include <src/main/common/entities/ClientMessage.h>
 
+#include "ClientMessage.h"
 #include "ServerMessageQueue.h"
 
 ServerMessageQueue::ServerMessageQueue(const std::string& file, const char letter){
