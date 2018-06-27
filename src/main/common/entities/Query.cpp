@@ -3,7 +3,6 @@
 #include <cstring>
 #include <sstream>
 
-const static char SEPARATOR = ',';
 
 // Client side
 Query::Query(const int operation, const std::string& name, const std::string& address, const std::string& phone)

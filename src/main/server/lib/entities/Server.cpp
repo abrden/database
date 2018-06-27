@@ -23,10 +23,6 @@ Response* Server::select_entries(const std::string& name,
 Response* Server::insert_entry(const std::string& name, const size_t name_size,
                                const std::string& address, const size_t address_size,
                                const std::string& phone, const size_t phone_size) {
-    std::cout << "ns " << name_size << std::endl;
-    std::cout << "as " << address_size << std::endl;
-    std::cout << "ps " << phone_size << std::endl;
-
     Response* r;
     try {
         db.insert_entry(name, name_size, address, address_size, phone, phone_size);
