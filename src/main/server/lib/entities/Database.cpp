@@ -1,5 +1,6 @@
 #include <stdexcept>
 #include "Database.h"
+#include "EntryValidator.h"
 #include "Entry.h"
 
 Database::Database(const std::string& db_file) : db_file(db_file) {
@@ -14,11 +15,17 @@ bool Database::entry_exists(const std::string &name, const std::string &address,
     return false;
 }
 
-void Database::insert_entry(const std::string &name, const std::string &address, const std::string &phone) {
+void Database::insert_entry(const std::string& name, const size_t name_size,
+                            const std::string& address, const size_t address_size,
+                            const std::string& phone, const size_t phone_size) {
     if (entry_exists(name, address, phone)) {
-        std::string message = "Error in insert_entry(): Entry exists";
+        std::string message = "Error: Entry already exists in the database";
         throw std::runtime_error(message);
     } else {
+        if (!EntryValidator::is_valid(name_size, address_size, phone_size)) {
+            std::string message = "Error: Entry exceeds fields limits or is not valid";
+            throw std::runtime_error(message);
+        }
         auto entry_to_insert = new Entry(name, address, phone);
         entries.push_back(entry_to_insert);
     }

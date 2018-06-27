@@ -18,7 +18,7 @@ TEST_CASE("Database", "[db]") {
 
     SECTION("entry_exists() with entry in the db") {
         Database db(db_file);
-        db.insert_entry(name, address, phone);
+        db.insert_entry(name, name.size(), address, address.size(), phone, phone.size());
 
         REQUIRE(db.entry_exists(name, address, phone));
     }
@@ -26,14 +26,14 @@ TEST_CASE("Database", "[db]") {
     SECTION("insert_entry() with non-duplicate entry") {
         Database db(db_file);
 
-        REQUIRE_NOTHROW(db.insert_entry(name, address, phone));
+        REQUIRE_NOTHROW(db.insert_entry(name, name.size(), address, address.size(), phone, phone.size()));
     }
 
     SECTION("insert_entry() with duplicate entry") {
         Database db(db_file);
-        db.insert_entry(name, address, phone);
+        db.insert_entry(name, name.size(), address, address.size(), phone, phone.size());
 
-        REQUIRE_THROWS_AS(db.insert_entry(name, address, phone), std::runtime_error);
+        REQUIRE_THROWS_AS(db.insert_entry(name, name.size(), address, address.size(), phone, phone.size()), std::runtime_error);
     }
 
     SECTION("select_entries() with non-existent entry") {
@@ -46,7 +46,7 @@ TEST_CASE("Database", "[db]") {
 
     SECTION("select_entries() with existent entry") {
         Database db(db_file);
-        db.insert_entry(name, address, phone);
+        db.insert_entry(name, name.size(), address, address.size(), phone, phone.size());
 
         std::vector<Entry*> entries = db.select_entries(name, address, phone);
 
@@ -63,8 +63,8 @@ TEST_CASE("Database", "[db]") {
         const std::string address_2 = "Balcarce 950";
         const std::string phone_2 = "0800-4444";
         Entry entry_2(name_2, address_2, phone_2);
-        db.insert_entry(name, address, phone);
-        db.insert_entry(name_2, address_2, phone_2);
+        db.insert_entry(name, name.size(), address, address.size(), phone, phone.size());
+        db.insert_entry(name_2, name_2.size(), address_2, address_2.size(), phone_2, phone_2.size());
 
         std::vector<Entry*> entries = db.select_entries(name, "", "");
 

@@ -16,7 +16,9 @@ class Database {
     public:
     Database(const std::string& db_file);
     bool entry_exists(const std::string &name, const std::string &address, const std::string &phone) const;
-    void insert_entry(const std::string &name, const std::string &address, const std::string &phone);
+    void insert_entry(const std::string& name, const size_t name_size,
+                      const std::string& address, const size_t address_size,
+                      const std::string& phone, const size_t phone_size);
     std::vector<Entry*> select_entries(const std::string &name, const std::string &address, const std::string &phone) const;
     ~Database();
 };

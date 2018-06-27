@@ -54,13 +54,16 @@ EntryData Entry::serialize() const {
 
     size_t len = name.copy(e.name, ENTRY_BUFF_SIZE::NAME, 0);
     e.name[len] = '\0';
+    e.name_size = name.size();
 
     len = address.copy(e.address, ENTRY_BUFF_SIZE::ADDRESS, 0);
     e.address[len] = '\0';
+    e.address_size = address.size();
 
     len = phone.copy(e.phone, ENTRY_BUFF_SIZE::PHONE, 0);
     e.phone[len] = '\0';
-    
+    e.phone_size = phone.size();
+
     return e;
 }
 

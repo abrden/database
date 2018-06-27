@@ -12,8 +12,11 @@ enum ENTRY_BUFF_SIZE {
 
 typedef struct {
     char name[ENTRY_BUFF_SIZE::NAME];
+    size_t name_size;
     char address[ENTRY_BUFF_SIZE::ADDRESS];
+    size_t address_size;
     char phone[ENTRY_BUFF_SIZE::PHONE];
+    size_t phone_size;
 } EntryData;
 
 class Entry {

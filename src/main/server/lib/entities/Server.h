@@ -16,7 +16,9 @@ class Server {
         ServerMessageQueue queue;
         SIGINTHandler sigint_handler;
 
-        Response* insert_entry(const std::string& name, const std::string& address, const std::string& phone);
+        Response* insert_entry(const std::string& name, const size_t name_size,
+                               const std::string& address, const size_t address_size,
+                               const std::string& phone, const size_t phone_size);
         Response* select_entries(const std::string& name, const std::string& address, const std::string& phone) const;
 
     public:

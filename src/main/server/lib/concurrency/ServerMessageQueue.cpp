@@ -4,6 +4,7 @@
 #include <sys/msg.h>
 #include <system_error>
 #include <cstring>
+#include <src/main/common/entities/Entry.h>
 
 #include "ClientMessage.h"
 #include "ServerMessageQueue.h"
@@ -23,7 +24,9 @@ ClientMessage* ServerMessageQueue::pop() const {
     if (received == 0) {
         return nullptr;
     }
-    Query query(data.data.operation, data.data.data.name, data.data.data.address, data.data.data.phone);
+    Query query(data.data.operation, data.data.data.name, data.data.data.name_size,
+                data.data.data.address, data.data.data.address_size,
+                data.data.data.phone, data.data.data.phone_size);
     return new ClientMessage(data.sender_id, query);
 }
 
