@@ -2,6 +2,8 @@
 #include <iostream>
 #include <unistd.h>
 #include <cstring>
+#include <fstream>
+#include <sstream>
 #include <system_error>
 
 #include "DatabasePersister.h"
@@ -12,7 +14,7 @@ void DatabasePersister::save_to_file(const std::string& file, const std::list<En
 
     for (auto const& entry : entries) {
         std::string entry_str = entry->to_string();
-        std::cout << "Writing to file : " << entry_str;
+        std::cout << "Writing to file: " << entry_str;
         ssize_t bytes_written = write(fd, entry_str.c_str(), entry_str.size());
         if ((unsigned long) bytes_written != entry_str.size()) {
             close(fd);
@@ -26,6 +28,15 @@ void DatabasePersister::save_to_file(const std::string& file, const std::list<En
 }
 
 void DatabasePersister::load_from_file(const std::string& file, std::list<Entry*>& entries) {
-    // TODO implement
-    return;
+    std::ifstream ifs(file);
+    if (!ifs) {
+        return;
+    }
+
+    std::string entry_str;
+
+    while (std::getline(ifs, entry_str)) {
+        std::cout << "Reading from file: " << entry_str << std::endl;
+        entries.push_back(new Entry(entry_str));
+    }
 }
