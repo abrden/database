@@ -10,7 +10,6 @@ int main(int argc, char* argv[]) {
         Client c(MessageQueueInfo::FILE, MessageQueueInfo::LETTER);
         c.run();
         return 0;
-    } catc
     } catch (const std::exception& e) {
         std::cerr << e.what() << std::endl;
         return -1;
