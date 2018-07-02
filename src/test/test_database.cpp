@@ -4,40 +4,39 @@
 
 TEST_CASE("Database", "[db]") {
 
-    const std::string db_file = "/tmp/test_db";
     const std::string name = "Juan Perez";
     const std::string address = "Calle Falsa 123";
     const std::string phone = "911";
     Entry entry(name, address, phone);
 
     SECTION("entry_exists() with empty db") {
-        Database db(db_file);
+        Database db("/tmp/test_db_1");
 
         REQUIRE_FALSE(db.entry_exists(name, address, phone));
     }
 
     SECTION("entry_exists() with entry in the db") {
-        Database db(db_file);
+        Database db("/tmp/test_db_2");
         db.insert_entry(name, name.size(), address, address.size(), phone, phone.size());
 
         REQUIRE(db.entry_exists(name, address, phone));
     }
 
     SECTION("insert_entry() with non-duplicate entry") {
-        Database db(db_file);
+        Database db("/tmp/test_db_3");
 
         REQUIRE_NOTHROW(db.insert_entry(name, name.size(), address, address.size(), phone, phone.size()));
     }
 
     SECTION("insert_entry() with duplicate entry") {
-        Database db(db_file);
+        Database db("/tmp/test_db_4");
         db.insert_entry(name, name.size(), address, address.size(), phone, phone.size());
 
         REQUIRE_THROWS_AS(db.insert_entry(name, name.size(), address, address.size(), phone, phone.size()), std::runtime_error);
     }
 
     SECTION("select_entries() with non-existent entry") {
-        Database db(db_file);
+        Database db("/tmp/test_db_5");
 
         std::vector<Entry*> entries = db.select_entries(name, address, phone);
 
@@ -45,7 +44,7 @@ TEST_CASE("Database", "[db]") {
     }
 
     SECTION("select_entries() with existent entry") {
-        Database db(db_file);
+        Database db("/tmp/test_db_6");
         db.insert_entry(name, name.size(), address, address.size(), phone, phone.size());
 
         std::vector<Entry*> entries = db.select_entries(name, address, phone);
@@ -58,7 +57,7 @@ TEST_CASE("Database", "[db]") {
     }
 
     SECTION("select_entries() with wildcards") {
-        Database db(db_file);
+        Database db("/tmp/test_db_7");
         const std::string name_2 = "Juan Perez";
         const std::string address_2 = "Balcarce 950";
         const std::string phone_2 = "0800-4444";
