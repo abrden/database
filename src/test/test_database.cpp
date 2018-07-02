@@ -10,14 +10,14 @@ TEST_CASE("Database", "[db]") {
     Entry entry(name, address, phone);
 
     SECTION("entry_exists() with empty db") {
-        const std::string db_file = "/tmp/test_db_1"
+        const std::string db_file = "/tmp/test_db_1";
         Database db(db_file);
 
         REQUIRE_FALSE(db.entry_exists(name, address, phone));
     }
 
     SECTION("entry_exists() with entry in the db") {
-        const std::string db_file = "/tmp/test_db_2"
+        const std::string db_file = "/tmp/test_db_2";
         Database db(db_file);
         db.insert_entry(name, name.size(), address, address.size(), phone, phone.size());
 
@@ -25,14 +25,14 @@ TEST_CASE("Database", "[db]") {
     }
 
     SECTION("insert_entry() with non-duplicate entry") {
-        const std::string db_file = "/tmp/test_db_3"
+        const std::string db_file = "/tmp/test_db_3";
         Database db(db_file);
 
         REQUIRE_NOTHROW(db.insert_entry(name, name.size(), address, address.size(), phone, phone.size()));
     }
 
     SECTION("insert_entry() with duplicate entry") {
-        const std::string db_file = "/tmp/test_db_4"
+        const std::string db_file = "/tmp/test_db_4";
         Database db(db_file);
         db.insert_entry(name, name.size(), address, address.size(), phone, phone.size());
 
@@ -40,7 +40,7 @@ TEST_CASE("Database", "[db]") {
     }
 
     SECTION("select_entries() with non-existent entry") {
-        const std::string db_file = "/tmp/test_db_5"
+        const std::string db_file = "/tmp/test_db_5";
         Database db(db_file);
 
         std::vector<Entry*> entries = db.select_entries(name, address, phone);
@@ -49,7 +49,7 @@ TEST_CASE("Database", "[db]") {
     }
 
     SECTION("select_entries() with existent entry") {
-        const std::string db_file = "/tmp/test_db_6"
+        const std::string db_file = "/tmp/test_db_6";
         Database db(db_file);
         db.insert_entry(name, name.size(), address, address.size(), phone, phone.size());
 
@@ -63,7 +63,7 @@ TEST_CASE("Database", "[db]") {
     }
 
     SECTION("select_entries() with wildcards") {
-        const std::string db_file = "/tmp/test_db_7"
+        const std::string db_file = "/tmp/test_db_7";
         Database db(db_file);
         const std::string name_2 = "Juan Perez";
         const std::string address_2 = "Balcarce 950";
